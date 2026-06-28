@@ -12,7 +12,8 @@ no engine logic.
   - [x] slice 2 — write API (store/update/destroy) reusing headless Rules + production/protected guards.
   - [x] slice 3 — theme adapter architecture (unstyled/tailwind/bootstrap + class_exists-guarded filament/nova) + ViewModel + HTML panel.
   - [x] slice 4 — i18n (translatable panel + `messages` lang file) + dark-mode (config + theme `dark:` variants).
-  - [ ] slice 5+ — Livewire reactive components, Filament panel / Nova tool integration.
+  - [x] slice 5 — optional Livewire reactive panel component (class_exists-guarded), inline editing drives the engine.
+  - [ ] slice 6+ — Filament panel page / Nova tool integration (theme adapters already provide the styling).
 - [ ] **Phase 6 — docs** — README + docs/ set.
 - [ ] **Phase 7 — release** — after headless, after explicit approval.
 

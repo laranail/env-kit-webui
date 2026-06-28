@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\EnvKit\WebUI\Tests;
 
 use Illuminate\Support\Facades\Facade;
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Simtabi\Laranail\EnvKit\Headless\Contracts\EnvKitInterface;
 use Simtabi\Laranail\EnvKit\Headless\EnvKitServiceProvider;
@@ -16,6 +17,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
+            LivewireServiceProvider::class, // for the reactive component tests
             EnvKitServiceProvider::class,     // the engine
             EnvKitWebUIServiceProvider::class, // the web surface
         ];
