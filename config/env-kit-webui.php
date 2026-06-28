@@ -24,4 +24,7 @@ return [
     // The default presentation adapter (unstyled | tailwind | bootstrap | filament | nova).
     'theme' => 'unstyled',
 
+    // Colour scheme for the panel (light | dark). Themes ship dark-mode classes.
+    'dark_mode' => 'light',
+
 ];

@@ -29,6 +29,7 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'env-kit-webui');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'env-kit-webui');
 
         $config = $this->app->make(Repository::class);
         $this->registerRoutes($config, 'route.prefix', 'route.middleware', 'api/v1/env-kit', ['api'], 'api.php');

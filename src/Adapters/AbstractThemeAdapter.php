@@ -23,9 +23,15 @@ abstract class AbstractThemeAdapter implements ThemeAdapterInterface
 
     public function render(EnvKitViewModel $viewModel): View
     {
+        $classes = $this->classes();
+
+        if (config('env-kit-webui.dark_mode') === 'dark') {
+            $classes['root'] = trim(($classes['root'] ?? '').' dark');
+        }
+
         return app(ViewFactory::class)->make('env-kit-webui::panel', [
             'vm' => $viewModel,
-            'theme' => $this->classes(),
+            'theme' => $classes,
         ]);
     }
 }
