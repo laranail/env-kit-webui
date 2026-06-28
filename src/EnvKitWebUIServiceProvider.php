@@ -6,8 +6,10 @@ namespace Simtabi\Laranail\EnvKit\WebUI;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 use Simtabi\Laranail\EnvKit\WebUI\Extension\ThemeManager;
 use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\EnsureEnvKitWebUIEnabled;
+use Simtabi\Laranail\EnvKit\WebUI\Livewire\EnvKitPanelComponent;
 use Simtabi\Laranail\Package\Tools\Package;
 use Simtabi\Laranail\Package\Tools\Providers\PackageServiceProvider;
 
@@ -34,6 +36,11 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
         $config = $this->app->make(Repository::class);
         $this->registerRoutes($config, 'route.prefix', 'route.middleware', 'api/v1/env-kit', ['api'], 'api.php');
         $this->registerRoutes($config, 'route.web_prefix', 'route.web_middleware', 'env-kit', ['web'], 'web.php');
+
+        // The reactive panel is optional — registered only when Livewire is present.
+        if (class_exists(Livewire::class)) {
+            Livewire::component('env-kit-panel', EnvKitPanelComponent::class);
+        }
     }
 
     /**
