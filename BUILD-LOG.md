@@ -9,7 +9,7 @@ no engine logic.
 - [x] **Phase 0 — repo setup** — git identity, `.gitignore` (+ `.phpstan.cache`), tooling (phpunit/pint/phpstan), BUILD-LOG.
 - [~] **Phase 5 — build webui** — UI-agnostic core + JSON API + theme/panel adapters + quality bar (i18n/a11y/responsive/dark); full test regime green; adapters `class_exists`-guarded.
   - [x] slice 1 — install wiring (path repo → ../headless, livewire ^4.1 for Filament 5) + provider + config + JSON read API (keys index/show) driving the engine, enabled-gate, secret masking.
-  - [ ] slice 2 — write API (store/update/destroy) reusing headless Rules + production guard.
+  - [x] slice 2 — write API (store/update/destroy) reusing headless Rules + production/protected guards.
   - [ ] slice 3+ — adapters (unstyled/tailwind/bootstrap/filament/nova), ViewModels, i18n/a11y.
 - [ ] **Phase 6 — docs** — README + docs/ set.
 - [ ] **Phase 7 — release** — after headless, after explicit approval.
@@ -30,3 +30,14 @@ no engine logic.
   secret-shaped values masked via the headless `SecretRedactor` unless `reveal_secrets`.
 - **5 tests** (Testbench): disabled→404, masked listing, show, unknown-key→404, reveal. L9 + Pint clean.
 - Note: the `path` repository in `composer.json` is dev-only (consumers resolve headless from Packagist).
+
+### Phase 5 — slice 2 (JSON write API) green
+- `EnvController` now CRUD; injects the concrete `EnvKit` and drives `set()/forget()` (every write hits
+  the engine's atomic/guarded/audited commit). `Http/Requests/{Store,Update}EnvVariableRequest` **reuse
+  the headless `Rules/` (`ValidEnvKey`/`ValidEnvValue`)** → invalid input is 422 before the engine.
+- `guardWrite()` maps engine guard failures to HTTP: `ProductionGuard`/`ProtectedKey` → **403**, other
+  `EnvKitException` → 422 (messages are secret-safe).
+- **12 tests** incl. POST create, 422 invalid key, PUT update, 404 missing, DELETE, **protected-key 403**,
+  **production-write 403**. L9 + Pint clean.
+- Testbench note: the path-repo symlink blocks the headless config auto-merge, so the test harness loads
+  `vendor/laranail/env-kit-headless/config/env-kit.php` explicitly (real installs merge it normally).
