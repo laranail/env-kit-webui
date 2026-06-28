@@ -1,0 +1,73 @@
+{
+    "name": "laranail/env-kit-webui",
+    "description": "Framework-agnostic web UI/UX companion for laranail/env-kit-headless — Tailwind, Bootstrap, unstyled, Filament, and Nova adapters.",
+    "keywords": ["laravel", "dotenv", "env", "editor", "ui", "filament", "nova", "livewire", "laranail", "oss"],
+    "homepage": "https://opensource.simtabi.com/env-kit-webui/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Imani Manyara",
+            "email": "imani@simtabi.com",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Simtabi LLC",
+            "email": "opensource@simtabi.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/laranail/env-kit-webui/issues",
+        "source": "https://github.com/laranail/env-kit-webui",
+        "docs": "https://opensource.simtabi.com/env-kit-webui/docs/"
+    },
+    "require": {
+        "php": "^8.4.1 || ^8.5",
+        "laranail/env-kit-headless": "^1.0",
+        "laranail/package-tools": "^1.0",
+        "illuminate/contracts": "^13.0",
+        "illuminate/http": "^13.0",
+        "illuminate/routing": "^13.0",
+        "illuminate/support": "^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "phpstan/phpstan": "^2.0",
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.0",
+        "rector/rector": "^2.0",
+        "filament/filament": "^5.0",
+        "livewire/livewire": "^3.0"
+    },
+    "suggest": {
+        "filament/filament": "Enables the Filament 5 panel adapter.",
+        "livewire/livewire": "Enables the optional Livewire reactive components for the Tailwind/Bootstrap themes.",
+        "laravel/nova": "Enables the Laravel Nova tool adapter."
+    },
+    "autoload": {
+        "psr-4": {
+            "Simtabi\\Laranail\\EnvKit\\WebUI\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Simtabi\\Laranail\\EnvKit\\WebUI\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Simtabi\\Laranail\\EnvKit\\WebUI\\EnvKitWebUIServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

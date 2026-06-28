@@ -1,0 +1,26 @@
+# Dependencies
+/vendor/
+/node_modules/
+composer.lock
+package-lock.json
+
+# Build output
+/public/build/
+/dist/
+
+# Test / tooling caches
+/.phpunit.cache/
+/.phpunit.result.cache
+.phpunit.result.cache
+/.pest/
+/build/
+/coverage/
+/.php-cs-fixer.cache
+/.rector.cache
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+/.idea/
+/.vscode/
+/.fleet/
