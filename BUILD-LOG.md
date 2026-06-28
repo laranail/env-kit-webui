@@ -11,7 +11,8 @@ no engine logic.
   - [x] slice 1 — install wiring (path repo → ../headless, livewire ^4.1 for Filament 5) + provider + config + JSON read API (keys index/show) driving the engine, enabled-gate, secret masking.
   - [x] slice 2 — write API (store/update/destroy) reusing headless Rules + production/protected guards.
   - [x] slice 3 — theme adapter architecture (unstyled/tailwind/bootstrap + class_exists-guarded filament/nova) + ViewModel + HTML panel.
-  - [ ] slice 4+ — reactive components, i18n/lang, a11y/dark-mode polish, Filament panel/Nova tool integration.
+  - [x] slice 4 — i18n (translatable panel + `messages` lang file) + dark-mode (config + theme `dark:` variants).
+  - [ ] slice 5+ — Livewire reactive components, Filament panel / Nova tool integration.
 - [ ] **Phase 6 — docs** — README + docs/ set.
 - [ ] **Phase 7 — release** — after headless, after explicit approval.
 
