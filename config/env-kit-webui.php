@@ -12,6 +12,10 @@ return [
         'prefix' => 'api/v1/env-kit',
         // Auth-gated by default. Override to suit your stack (sanctum/session/…).
         'middleware' => ['api', 'auth:sanctum'],
+
+        // The HTML panel (read-only) lives on a separate web route group.
+        'web_prefix' => 'env-kit',
+        'web_middleware' => ['web', 'auth'],
     ],
 
     // When false (default), secret-shaped values are masked in API responses.

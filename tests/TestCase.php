@@ -26,6 +26,7 @@ abstract class TestCase extends Orchestra
         $app['config']->set('app.key', 'base64:'.base64_encode(str_repeat('k', 32)));
         // Drop auth in tests so we exercise the enabled-gate + engine wiring directly.
         $app['config']->set('env-kit-webui.route.middleware', ['api']);
+        $app['config']->set('env-kit-webui.route.web_middleware', ['web']);
 
         // The dev path-repo symlink prevents the headless provider's auto
         // config-merge under Testbench (real installs from Packagist merge fine);
