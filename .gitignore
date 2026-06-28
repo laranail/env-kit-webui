@@ -17,6 +17,7 @@ package-lock.json
 /coverage/
 /.php-cs-fixer.cache
 /.rector.cache
+/.phpstan.cache/
 
 # OS / editor cruft
 .DS_Store
