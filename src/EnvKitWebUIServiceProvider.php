@@ -6,6 +6,7 @@ namespace Simtabi\Laranail\EnvKit\WebUI;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Facades\Route;
+use Simtabi\Laranail\EnvKit\WebUI\Extension\ThemeManager;
 use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\EnsureEnvKitWebUIEnabled;
 use Simtabi\Laranail\Package\Tools\Package;
 use Simtabi\Laranail\Package\Tools\Providers\PackageServiceProvider;
@@ -19,23 +20,45 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
             ->hasConfigFile('env-kit-webui');
     }
 
+    public function packageRegistered(): void
+    {
+        // Singleton so consumer-registered theme adapters persist for the request.
+        $this->app->singleton(ThemeManager::class);
+    }
+
     public function packageBooted(): void
     {
-        $config = $this->app->make(Repository::class);
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'env-kit-webui');
 
-        $prefix = $config->get('env-kit-webui.route.prefix', 'api/v1/env-kit');
-        $middleware = $config->get('env-kit-webui.route.middleware', ['api']);
+        $config = $this->app->make(Repository::class);
+        $this->registerRoutes($config, 'route.prefix', 'route.middleware', 'api/v1/env-kit', ['api'], 'api.php');
+        $this->registerRoutes($config, 'route.web_prefix', 'route.web_middleware', 'env-kit', ['web'], 'web.php');
+    }
+
+    /**
+     * @param  list<string>  $fallbackMiddleware
+     */
+    private function registerRoutes(
+        Repository $config,
+        string $prefixKey,
+        string $middlewareKey,
+        string $fallbackPrefix,
+        array $fallbackMiddleware,
+        string $routeFile,
+    ): void {
+        $prefix = $config->get("env-kit-webui.{$prefixKey}", $fallbackPrefix);
+        $middleware = $config->get("env-kit-webui.{$middlewareKey}", $fallbackMiddleware);
 
         Route::group([
-            'prefix' => is_string($prefix) ? $prefix : 'api/v1/env-kit',
+            'prefix' => is_string($prefix) ? $prefix : $fallbackPrefix,
             // The enabled-gate runs first on every request, so toggling config at
             // runtime takes effect without re-registering routes.
             'middleware' => array_merge(
                 [EnsureEnvKitWebUIEnabled::class],
-                is_array($middleware) ? array_values($middleware) : ['api'],
+                is_array($middleware) ? array_values($middleware) : $fallbackMiddleware,
             ),
-        ], function (): void {
-            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        ], function () use ($routeFile): void {
+            $this->loadRoutesFrom(__DIR__.'/../routes/'.$routeFile);
         });
     }
 }

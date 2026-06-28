@@ -10,7 +10,8 @@ no engine logic.
 - [~] **Phase 5 — build webui** — UI-agnostic core + JSON API + theme/panel adapters + quality bar (i18n/a11y/responsive/dark); full test regime green; adapters `class_exists`-guarded.
   - [x] slice 1 — install wiring (path repo → ../headless, livewire ^4.1 for Filament 5) + provider + config + JSON read API (keys index/show) driving the engine, enabled-gate, secret masking.
   - [x] slice 2 — write API (store/update/destroy) reusing headless Rules + production/protected guards.
-  - [ ] slice 3+ — adapters (unstyled/tailwind/bootstrap/filament/nova), ViewModels, i18n/a11y.
+  - [x] slice 3 — theme adapter architecture (unstyled/tailwind/bootstrap + class_exists-guarded filament/nova) + ViewModel + HTML panel.
+  - [ ] slice 4+ — reactive components, i18n/lang, a11y/dark-mode polish, Filament panel/Nova tool integration.
 - [ ] **Phase 6 — docs** — README + docs/ set.
 - [ ] **Phase 7 — release** — after headless, after explicit approval.
 
@@ -41,3 +42,15 @@ no engine logic.
   **production-write 403**. L9 + Pint clean.
 - Testbench note: the path-repo symlink blocks the headless config auto-merge, so the test harness loads
   `vendor/laranail/env-kit-headless/config/env-kit.php` explicitly (real installs merge it normally).
+
+### Phase 5 — slice 3 (presentation layer) green
+- `Contracts/ThemeAdapterInterface` + `Adapters/AbstractThemeAdapter` (renders one `panel.blade.php`
+  parameterised by a CSS class map — no per-theme Blade duplication) + 5 adapters: Unstyled/Tailwind/
+  Bootstrap, plus Filament/Nova. `Extension/ThemeManager` registers the agnostic three always and the
+  Filament/Nova themes only when those frameworks are present (**string-literal `class_exists` guards** so
+  neither must be installed nor known to PHPStan).
+- `Http/ViewModels/EnvKitViewModel` (presentation snapshot) + `Http/Controllers/PanelController` (renders
+  the active theme from the engine, secrets masked, a11y markup: lang/viewport/scope/role). Separate
+  `web` route group (`env-kit`), enabled-gated.
+- **18 tests** incl. panel 404-when-disabled, render default + configured theme, secret masking, the
+  class_exists guard (filament present / nova absent), unknown-theme fallback, custom adapter. L9 + Pint clean.
