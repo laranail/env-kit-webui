@@ -27,11 +27,13 @@ jobs:
           extensions: mbstring
           coverage: none
 
-      # The dependency `laranail/env-kit-headless` resolves from Packagist in CI.
-      # The local `path` repository in composer.json (../headless) is dev-only and
-      # does not exist in CI, so this build must not assume a sibling checkout.
+      # env-kit-headless is not on Packagist yet; resolve it from its public repo
+      # (no-api = git clone, avoids GitHub REST API rate limits). Other laranail
+      # deps (package-tools) resolve from Packagist.
+      - name: Resolve unpublished laranail packages from VCS
+        run: composer config repositories.env-kit-headless '{"type":"vcs","url":"https://github.com/laranail/env-kit-headless","no-api":true}'
       - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+        run: composer update --prefer-stable --no-interaction --no-progress
 
       - name: Pint (code style)
         run: vendor/bin/pint --test
