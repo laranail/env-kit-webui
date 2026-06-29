@@ -11,6 +11,8 @@ use Simtabi\Laranail\EnvKit\Headless\Exceptions\EnvKitException;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\NotEditableException;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\ProductionGuardException;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\ProtectedKeyException;
+use Simtabi\Laranail\EnvKit\Headless\Exceptions\UnauthorizedUpdateException;
+use Simtabi\Laranail\EnvKit\Headless\Exceptions\WriteVetoedException;
 use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
 use Simtabi\Laranail\EnvKit\WebUI\Http\Requests\StoreEnvVariableRequest;
 use Simtabi\Laranail\EnvKit\WebUI\Http\Requests\UpdateEnvVariableRequest;
@@ -97,7 +99,7 @@ final class EnvController
     {
         try {
             $action();
-        } catch (ProductionGuardException|ProtectedKeyException|NotEditableException $e) {
+        } catch (ProductionGuardException|ProtectedKeyException|NotEditableException|UnauthorizedUpdateException|WriteVetoedException $e) {
             abort(403, $e->getMessage());
         } catch (EnvKitException $e) {
             abort(422, $e->getMessage());
