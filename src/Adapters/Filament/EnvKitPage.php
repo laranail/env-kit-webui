@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament;
 
 use Filament\Pages\Page;
+use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
 
 /**
  * A Filament panel page that surfaces the EnvKit editor (the reactive Livewire
@@ -21,4 +22,10 @@ final class EnvKitPage extends Page
     protected static ?string $slug = 'env-kit';
 
     protected string $view = 'env-kit-webui::filament.env-kit-page';
+
+    /** Honour the same disabled-by-default + gate policy as the HTTP surface. */
+    public static function canAccess(): bool
+    {
+        return PanelAccess::allowed();
+    }
 }

@@ -14,7 +14,24 @@ ENV_KIT_WEBUI_ENABLED=true
 While disabled, every API and panel route returns `404` — checked per request, so
 the surface can be toggled at runtime.
 
+The **in-app surfaces honour the same switch**: the Filament page's `canAccess()` and
+the Livewire `env-kit-panel` component both refuse (Filament hides it / the component
+403s) unless `enabled` is true — so embedding them anywhere can't bypass the gate.
+
 ## 2. Auth-gated
+
+For the in-app surfaces, set an authorization gate so only the right users reach the
+editor (on top of the panel/route auth):
+
+```php
+// config/env-kit-webui.php
+'gate' => 'manage-env',   // a Gate ability checked by the Filament page + Livewire panel
+```
+
+```php
+Gate::define('manage-env', fn ($user) => $user->isAdmin());
+```
+
 
 Routes run behind the middleware in `config('env-kit-webui.route.middleware')` /
 `web_middleware` — `auth:sanctum` for the API and `web`+`auth` for the panel by

@@ -18,6 +18,11 @@ return [
         'web_middleware' => ['web', 'auth'],
     ],
 
+    // Optional authorization gate (a Gate ability name) checked for the in-app
+    // surfaces — the Filament page and the Livewire panel — on top of `enabled`.
+    // null = rely on `enabled` + the surrounding panel/route auth.
+    'gate' => null,
+
     // When false (default), secret-shaped values are masked in API responses.
     'reveal_secrets' => false,
 

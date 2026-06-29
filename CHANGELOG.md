@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-06-29
+
+### Fixed
+
+- **Security:** the Filament page and the Livewire `env-kit-panel` component now honour the
+  `enabled` flag (and an optional `gate` ability) — previously they bypassed the
+  disabled-by-default switch and the Filament page had no access control, so any panel user
+  could read/edit `.env`. New `Support\PanelAccess` gate, `EnvKitPage::canAccess()`, and a
+  `mount()` guard on the component.
+- The Livewire panel now surfaces engine guard/validation failures inline (an inline error)
+  instead of throwing an ungraceful 500.
+- Corrected the CHANGELOG comparison links.
+
 ## [0.1.1] - 2026-06-29
 
 ### Added
@@ -43,5 +56,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   frameworks are installed (`class_exists`-guarded).
 - Support for consumer-registrable custom theme adapters.
 
-[Unreleased]: https://github.com/laranail/env-kit-webui/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/laranail/env-kit-webui/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/laranail/env-kit-webui/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/laranail/env-kit-webui/releases/tag/v0.1.0
