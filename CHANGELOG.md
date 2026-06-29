@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-29
+
+### Added
+
+- **Access-control lockdown** (`env-kit-webui.access` / `throttle`, all opt-in): an IP
+  allowlist (IPv4/IPv6/CIDR), a timing-safe `X-EnvKit-Token` secret for the API, a
+  time-window (timezone + days + daily window + absolute range), and a request throttle.
+- **Response-hardening headers** on every EnvKit response (`Cache-Control: no-store`,
+  `X-Frame-Options: DENY` + CSP `frame-ancestors`, `nosniff`, `noindex`).
+- **Access-denial observability**: a structured security log line + an `AccessDenied`
+  event on every blocked request.
+
+### Fixed (security)
+
+- The authorization `gate` is now enforced on the **HTTP API + HTML panel** (not just the
+  Filament/Livewire surfaces); the lockdown middleware is package-prepended so it can't be
+  dropped by overriding `route.middleware`.
+- Engine update-gate / observer-veto refusals map to **403**.
+
+### Changed
+
+- `EnsureEnvKitWebUIEnabled` middleware renamed to `EnsureEnvKitWebUIAccess` (the old class
+  is kept as a deprecated subclass for one release).
+
 ## [0.1.2] - 2026-06-29
 
 ### Fixed
@@ -56,6 +80,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   frameworks are installed (`class_exists`-guarded).
 - Support for consumer-registrable custom theme adapters.
 
-[Unreleased]: https://github.com/laranail/env-kit-webui/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/laranail/env-kit-webui/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/laranail/env-kit-webui/compare/v0.1.2...v0.2.0
+[0.1.2]: https://github.com/laranail/env-kit-webui/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/laranail/env-kit-webui/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/laranail/env-kit-webui/releases/tag/v0.1.0
