@@ -18,10 +18,41 @@ return [
         'web_middleware' => ['web', 'auth'],
     ],
 
-    // Optional authorization gate (a Gate ability name) checked for the in-app
-    // surfaces — the Filament page and the Livewire panel — on top of `enabled`.
-    // null = rely on `enabled` + the surrounding panel/route auth.
+    // Optional authorization gate (a Gate ability name) checked for ALL surfaces —
+    // the HTTP API/panel and the in-app Filament/Livewire surfaces — on top of
+    // `enabled`. null = rely on `enabled` + the surrounding panel/route auth.
     'gate' => null,
+
+    // Extra lockdown controls (all off until configured). Behind a proxy you MUST
+    // configure Laravel's trusted proxies, or the IP allowlist matches the proxy.
+    'access' => [
+        // IPv4/IPv6/CIDR allowlist. [] = allow any IP.
+        'allowed_ips' => [],
+
+        // Shared secret required in the `X-EnvKit-Token` header (API only, timing-safe).
+        // null/'' = no token gate.
+        'token' => env('ENV_KIT_WEBUI_TOKEN'),
+
+        // Time-window. All empty = always open. `days`: ISO 1-7 or names (Mon, Tue…).
+        // `start`/`end`: 'HH:MM' (overnight-aware). `from`/`until`: absolute datetimes.
+        'schedule' => [
+            'timezone' => null, // null = config('app.timezone')
+            'days' => [],
+            'start' => null,
+            'end' => null,
+            'from' => null,
+            'until' => null,
+        ],
+
+        // Log channel for access denials. null = the default channel.
+        'log_channel' => null,
+    ],
+
+    // Request throttle for the write API (named limiter 'env-kit').
+    'throttle' => [
+        'enabled' => true,
+        'per_minute' => 30,
+    ],
 
     // When false (default), secret-shaped values are masked in API responses.
     'reveal_secrets' => false,
