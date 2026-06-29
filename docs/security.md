@@ -18,7 +18,9 @@ the surface can be toggled at runtime.
 
 Routes run behind the middleware in `config('env-kit-webui.route.middleware')` /
 `web_middleware` — `auth:sanctum` for the API and `web`+`auth` for the panel by
-default. Adjust to your stack; do **not** ship it unauthenticated.
+default. Adjust to your stack; do **not** ship it unauthenticated. The `auth:sanctum`
+default requires `laravel/sanctum` installed and configured — if you use a different
+guard, change `route.middleware` accordingly (an unknown guard otherwise errors).
 
 ## 3. Production-write-blocked
 
