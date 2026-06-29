@@ -20,13 +20,6 @@
         "source": "https://github.com/laranail/env-kit-webui",
         "docs": "https://opensource.simtabi.com/env-kit-webui/docs/"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../headless",
-            "options": { "symlink": true }
-        }
-    ],
     "require": {
         "php": "^8.4.1 || ^8.5",
         "laranail/env-kit-headless": "^0.1",
