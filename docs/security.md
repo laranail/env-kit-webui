@@ -52,6 +52,41 @@ is no UI affordance to bypass it casually.
 - The engine redacts secrets from logs, exceptions, audit records, and events, so a
   raw secret never escapes through the web layer either.
 
+## Access-control lockdown
+
+Beyond `enabled` + auth, harden the surface with `env-kit-webui.access` (all opt-in). The
+guards are **package-prepended** to the routes, so they can't be dropped by overriding
+`route.middleware`.
+
+```php
+'access' => [
+    'allowed_ips' => ['10.0.0.0/8', '203.0.113.4'], // IPv4/IPv6/CIDR; [] = any
+    'token'       => env('ENV_KIT_WEBUI_TOKEN'),     // X-EnvKit-Token header (API), timing-safe
+    'schedule'    => [                               // all empty = always open
+        'timezone' => 'UTC',
+        'days'     => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        'start'    => '09:00',
+        'end'      => '17:00',     // overnight-aware when end < start
+        'from'     => null, 'until' => null, // optional absolute datetime range
+    ],
+],
+'throttle' => ['enabled' => true, 'per_minute' => 30],
+```
+
+A blocked request **404**s while disabled (hidden) and **403**s for an IP / token / schedule /
+gate failure — each logged (`access.log_channel`) and dispatched as an `Events\AccessDenied`
+event for alerting.
+
+> **Behind a proxy** you MUST configure Laravel's [trusted proxies](https://laravel.com/docs/trusted-proxies)
+> or the IP allowlist matches the proxy, not the client.
+
+### Response headers + self-protection
+
+Every EnvKit response carries `Cache-Control: no-store`, `X-Frame-Options: DENY`
+(+ CSP `frame-ancestors`), `nosniff`, and `noindex`. Keep `ENV_KIT_WEBUI_TOKEN` and `APP_KEY`
+in the engine's `protected_keys` + `hidden_keys` so the editor cannot expose or rewrite its own
+gate (`APP_KEY` / `*_TOKEN` already match the defaults).
+
 ## Reporting
 
 Found an issue? See [SECURITY.md](../SECURITY.md) — report privately to
