@@ -17,6 +17,17 @@ The Filament and Nova adapters are **`class_exists`-guarded**: they are register
 only when the framework is present, so neither needs to be installed for the package
 to work. An unknown theme name falls back to `unstyled`.
 
+## Dark mode
+
+Set `config('env-kit-webui.dark_mode')` to `'dark'` (default `'light'`) to add a `dark`
+root class; every built-in theme ships `dark:` variants:
+
+```php
+// config/env-kit-webui.php
+'theme'     => 'tailwind',
+'dark_mode' => 'dark',
+```
+
 ## How it works
 
 All themes render one Blade view (`env-kit-webui::panel`), parameterised by a CSS
