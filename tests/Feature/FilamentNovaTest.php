@@ -4,11 +4,24 @@ declare(strict_types=1);
 
 use Filament\Contracts\Plugin;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\Gate;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\EnvKitPage;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\EnvKitPlugin;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 
 uses(TestCase::class);
+
+it('the Filament page honours the enabled flag and the optional gate', function () {
+    config(['env-kit-webui.enabled' => false]);
+    expect(EnvKitPage::canAccess())->toBeFalse(); // disabled → no access
+
+    config(['env-kit-webui.enabled' => true, 'env-kit-webui.gate' => null]);
+    expect(EnvKitPage::canAccess())->toBeTrue(); // enabled, no gate
+
+    config(['env-kit-webui.gate' => 'manage-env']);
+    Gate::define('manage-env', fn () => false);
+    expect(EnvKitPage::canAccess())->toBeFalse(); // gate denies
+});
 
 it('ships a Filament page that surfaces the panel', function () {
     expect(class_exists(EnvKitPage::class))->toBeTrue()

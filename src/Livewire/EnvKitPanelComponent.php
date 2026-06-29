@@ -8,7 +8,9 @@ use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Simtabi\Laranail\EnvKit\Headless\EnvKit;
+use Simtabi\Laranail\EnvKit\Headless\Exceptions\EnvKitException;
 use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
+use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
 
 /**
  * Optional reactive panel. Registered only when Livewire is installed (the
@@ -26,6 +28,10 @@ final class EnvKitPanelComponent extends Component
 
     public function mount(): void
     {
+        // The component drives engine writes, so it must honour the same gate as
+        // the HTTP surface — otherwise embedding it bypasses disabled/auth.
+        abort_unless(PanelAccess::allowed(), 403);
+
         $this->refreshVariables();
     }
 
@@ -47,7 +53,15 @@ final class EnvKitPanelComponent extends Component
             return;
         }
 
-        $this->engine()->set($this->editingKey, $this->draft);
+        try {
+            $this->engine()->set($this->editingKey, $this->draft);
+        } catch (EnvKitException $e) {
+            // Surface guard/validation failures inline (messages are secret-safe).
+            $this->addError('draft', $e->getMessage());
+
+            return;
+        }
+
         $this->cancel();
         $this->refreshVariables();
     }
