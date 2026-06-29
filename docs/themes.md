@@ -52,6 +52,38 @@ public function boot(ThemeManager $themes): void
 For full control, implement `Contracts\ThemeAdapterInterface` directly and return any
 `Illuminate\Contracts\View\View` from `render()`.
 
+## Filament panel
+
+Surface the editor as a page inside a Filament panel — register the shipped plugin on
+your panel (Filament 5):
+
+```php
+use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\EnvKitPlugin;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel->plugin(EnvKitPlugin::make());
+}
+```
+
+The page embeds the reactive Livewire panel. (Requires `livewire/livewire`, which
+Filament already depends on.)
+
+## Laravel Nova
+
+Nova is paid/opt-in, so the `EnvKitTool` is shipped as an adaptable starting point
+(excluded from this package's CI). Register it in your `NovaServiceProvider`:
+
+```php
+public function tools(): array
+{
+    return [new \Simtabi\Laranail\EnvKit\WebUI\Adapters\Nova\EnvKitTool];
+}
+```
+
+It links the Nova sidebar to the EnvKit web panel route; adapt the menu path/icon (or
+add a Nova Vue resource to embed it) to your Nova version.
+
 ---
 
 [← Docs index](../README.md#documentation)

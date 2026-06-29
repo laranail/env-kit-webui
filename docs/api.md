@@ -58,7 +58,7 @@ before the engine is touched, and engine guards map to HTTP statuses:
 | `200` / `201` | Success |
 | `404` | Surface disabled, or unknown key |
 | `422` | Validation failure (malformed key/value) |
-| `403` | Protected key, or a production-write without override |
+| `403` | Protected key, a non-editable key (outside `editable_keys`), or a production-write without override |
 
 Every write flows through the engine's atomic, backed-up, audited commit path —
 the API never writes the file itself.

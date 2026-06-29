@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-06-28
+### Added
+
+- Real Filament integration — an `EnvKitPage` + `EnvKitPlugin` that surface the editor
+  inside a Filament 5 panel.
+- A Laravel Nova `EnvKitTool` (opt-in, adaptable starting point; excluded from CI).
+
+### Fixed
+
+- Secret masking now honours the engine's `hidden_keys` config across the API, the HTML
+  panel, and the Livewire component (previously the built-in patterns only).
+- A write to a key outside `editable_keys` now returns **403** (was an unmapped 422).
+
+## [0.1.0] - 2026-06-29
 
 ### Added
 

@@ -5,4 +5,9 @@ parameters:
     level: 9
     paths:
         - src
+    excludePaths:
+        # Laravel Nova is paid/opt-in and not installed here, so this one file
+        # (which extends a Nova base class) cannot be analysed. It is class_exists-safe
+        # at runtime — only loaded when a consumer with Nova references it.
+        - src/Adapters/Nova/EnvKitTool.php
     tmpDir: .phpstan.cache

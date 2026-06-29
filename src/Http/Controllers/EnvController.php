@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Http\JsonResponse;
 use Simtabi\Laranail\EnvKit\Headless\EnvKit;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\EnvKitException;
+use Simtabi\Laranail\EnvKit\Headless\Exceptions\NotEditableException;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\ProductionGuardException;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\ProtectedKeyException;
 use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
@@ -96,7 +97,7 @@ final class EnvController
     {
         try {
             $action();
-        } catch (ProductionGuardException|ProtectedKeyException $e) {
+        } catch (ProductionGuardException|ProtectedKeyException|NotEditableException $e) {
             abort(403, $e->getMessage());
         } catch (EnvKitException $e) {
             abort(422, $e->getMessage());
