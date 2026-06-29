@@ -22,7 +22,7 @@
     },
     "require": {
         "php": "^8.4.1 || ^8.5",
-        "laranail/env-kit-headless": "^0.1",
+        "laranail/env-kit-headless": "^0.2",
         "laranail/package-tools": "^1.0",
         "illuminate/contracts": "^13.0",
         "illuminate/http": "^13.0",
