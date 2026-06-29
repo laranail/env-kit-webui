@@ -54,11 +54,18 @@ final class PanelAccess
 
         $tz = is_string($schedule['timezone'] ?? null) && $schedule['timezone'] !== '' ? $schedule['timezone'] : null;
         $tz ??= is_string($appTz = config('app.timezone')) ? $appTz : 'UTC';
-        $now = ($now ?? CarbonImmutable::now($tz))->setTimezone($tz);
 
-        return self::withinRange($schedule, $now, $tz)
-            && self::onAllowedDay($schedule, $now)
-            && self::withinDailyWindow($schedule, $now);
+        try {
+            $now = ($now ?? CarbonImmutable::now($tz))->setTimezone($tz);
+
+            return self::withinRange($schedule, $now, $tz)
+                && self::onAllowedDay($schedule, $now)
+                && self::withinDailyWindow($schedule, $now);
+        } catch (\Throwable) {
+            // A malformed schedule (bad timezone / from / until) fails CLOSED — deny
+            // rather than 500, so a config typo can't silently open the surface.
+            return false;
+        }
     }
 
     public static function allowed(): bool
@@ -106,16 +113,29 @@ final class PanelAccess
     /** @param array<string, mixed> $schedule */
     private static function withinDailyWindow(array $schedule, CarbonImmutable $now): bool
     {
-        $start = $schedule['start'] ?? null;
-        $end = $schedule['end'] ?? null;
-        if (! is_string($start) || ! is_string($end) || $start === '' || $end === '') {
-            return true;
+        $start = self::minutesOfDay($schedule['start'] ?? null);
+        $end = self::minutesOfDay($schedule['end'] ?? null);
+        if ($start === null || $end === null) {
+            return true; // no valid window configured → no constraint
         }
 
-        $time = $now->format('H:i');
+        $time = $now->hour * 60 + $now->minute;
 
         return $start <= $end
             ? ($time >= $start && $time <= $end)        // same-day window
             : ($time >= $start || $time <= $end);       // overnight window (e.g. 22:00–06:00)
+    }
+
+    /** Parse an `H:i` time (accepts `9:00` or `09:00`) to minutes-since-midnight, or null. */
+    private static function minutesOfDay(mixed $time): ?int
+    {
+        if (! is_string($time) || preg_match('/^(\d{1,2}):(\d{2})$/', $time, $m) !== 1) {
+            return null;
+        }
+
+        $hours = (int) $m[1];
+        $minutes = (int) $m[2];
+
+        return $hours <= 23 && $minutes <= 59 ? $hours * 60 + $minutes : null;
     }
 }

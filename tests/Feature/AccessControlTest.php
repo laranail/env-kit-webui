@@ -51,6 +51,21 @@ it('blocks outside the configured daily time-window', function () {
     $this->getJson('api/v1/env-kit/keys')->assertOk();
 });
 
+it('fails closed (403, not 500) on a malformed schedule', function () {
+    $this->bindEnv("A=1\n");
+    config(['env-kit-webui.access.schedule' => ['timezone' => 'Not/AZone']]);
+
+    $this->getJson('api/v1/env-kit/keys')->assertForbidden();
+});
+
+it('accepts a non-zero-padded daily window', function () {
+    $this->bindEnv("A=1\n");
+    config(['env-kit-webui.access.schedule' => ['timezone' => 'UTC', 'start' => '9:00', 'end' => '17:00']]);
+
+    Carbon::setTestNow(Carbon::parse('2026-06-30 12:00:00', 'UTC'));
+    $this->getJson('api/v1/env-kit/keys')->assertOk();
+});
+
 it('sets response-hardening headers', function () {
     $this->bindEnv("A=1\n");
 
