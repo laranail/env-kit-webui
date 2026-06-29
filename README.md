@@ -68,15 +68,17 @@ The Filament and Nova themes register only when those frameworks are installed.
 |------|----------------|
 | [Installation](docs/installation.md) | Requirements, enabling, auth & route config |
 | [API](docs/api.md) | The JSON CRUD endpoints, validation, status codes |
-| [Themes](docs/themes.md) | The theme adapters and writing your own |
-| [Security](docs/security.md) | The disabled/auth/production guardrails |
+| [Themes](docs/themes.md) | The theme adapters (Tailwind/Bootstrap/Filament/Nova) and writing your own |
+| [Security](docs/security.md) | Disabled-by-default + auth, the access-control lockdown (IP allowlist, token, time-window, throttle), response headers |
 
 Rendered docs: **<https://opensource.simtabi.com/env-kit-webui/docs/>**.
 
 ## Security
 
 See **[SECURITY.md](SECURITY.md)**. The surface is off until enabled, requires auth,
-blocks production writes, and masks secret-shaped values in responses. Report
+blocks production writes, and masks secret-shaped values in responses. It can be locked
+down further with an **IP allowlist, a secret token, a time-window, and a throttle**, and
+ships hardening response headers — see **[docs/security.md](docs/security.md)**. Report
 vulnerabilities privately to `opensource@simtabi.com`.
 
 ## License
