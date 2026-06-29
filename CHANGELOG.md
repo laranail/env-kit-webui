@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Tests
+
+- Direct coverage of the access-control schedule logic (IP/CIDR allowlist, day sets, same-day
+  + overnight daily windows, absolute date ranges), the Bootstrap/Filament theme adapters, the
+  Filament plugin, and the authed access-denial path — line coverage ~94%.
+
 ## [0.2.1] - 2026-06-29
 
 ### Fixed
