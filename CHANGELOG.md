@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-06-29
+
+### Added
+
+- The JSON write API now validates values against the engine **schema** — `StoreEnvVariableRequest`
+  and `UpdateEnvVariableRequest` apply the headless `MatchesEnvSchema` rule (a no-op until an
+  `env-kit.schema` is configured), so the web surface enforces the same rules as the CLI and
+  programmatic API.
+
 ### Tests
 
 - Direct coverage of the access-control schedule logic (IP/CIDR allowlist, day sets, same-day

@@ -50,8 +50,10 @@ DELETE /api/v1/env-kit/keys/OLD_KEY
 
 ## Validation & status codes
 
-Input is validated with the **headless rules** (`ValidEnvKey`, `ValidEnvValue`)
-before the engine is touched, and engine guards map to HTTP statuses:
+Input is validated with the **headless rules** (`ValidEnvKey`, `ValidEnvValue`,
+and `MatchesEnvSchema` — so a configured `env-kit.schema` is enforced over the API
+exactly as on the CLI; it is a no-op until a schema is defined) before the engine is
+touched, and engine guards map to HTTP statuses:
 
 | Status | Cause |
 |--------|-------|
