@@ -2,7 +2,7 @@
     "name": "laranail/env-kit-webui",
     "description": "Framework-agnostic web UI/UX companion for laranail/env-kit-headless — Tailwind, Bootstrap, unstyled, Filament, and Nova adapters.",
     "keywords": ["laravel", "dotenv", "env", "editor", "ui", "filament", "nova", "livewire", "laranail", "oss"],
-    "homepage": "https://opensource.simtabi.com/env-kit-webui/",
+    "homepage": "https://opensource.simtabi.com/documentation/laranail/env-kit-webui/",
     "license": "MIT",
     "authors": [
         {
@@ -18,7 +18,7 @@
     "support": {
         "issues": "https://github.com/laranail/env-kit-webui/issues",
         "source": "https://github.com/laranail/env-kit-webui",
-        "docs": "https://opensource.simtabi.com/env-kit-webui/docs/"
+        "docs": "https://opensource.simtabi.com/documentation/laranail/env-kit-webui/"
     },
     "require": {
         "php": "^8.4.1 || ^8.5",
