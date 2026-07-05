@@ -1,11 +1,11 @@
-# EnvKit WebUI
+# laranail/env-kit-webui
+
+[![Latest version on Packagist](https://img.shields.io/packagist/v/laranail/env-kit-webui.svg)](https://packagist.org/packages/laranail/env-kit-webui)
+[![Tests](https://github.com/laranail/env-kit-webui/actions/workflows/ci.yml/badge.svg)](https://github.com/laranail/env-kit-webui/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 > A framework-agnostic web companion for [`laranail/env-kit-headless`](https://github.com/laranail/env-kit-headless) —
 > a JSON CRUD API and a themed HTML panel that **drive the engine**, never re-implement it.
-
-[![Tests](https://github.com/laranail/env-kit-webui/actions/workflows/ci.yml/badge.svg)](https://github.com/laranail/env-kit-webui/actions)
-[![Packagist](https://img.shields.io/packagist/v/laranail/env-kit-webui)](https://packagist.org/packages/laranail/env-kit-webui)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 `laranail/env-kit-webui` adds a web surface to the EnvKit engine. Every read and
 write calls the headless `EnvKit` — so the web layer inherits its atomic writes,
@@ -60,26 +60,51 @@ engine) and surface engine guards as HTTP statuses (protected key / production �
 
 The Filament and Nova themes register only when those frameworks are installed.
 
-<a id="documentation"></a>
+## <a name="documentation"></a>Documentation
 
-## Documentation
+Hosted at [`opensource.simtabi.com/env-kit-webui/docs/`](https://opensource.simtabi.com/env-kit-webui/docs/).
+The same pages live under [`docs/`](docs/):
 
-| Page | What it covers |
-|------|----------------|
-| [Installation](docs/installation.md) | Requirements, enabling, auth & route config |
-| [API](docs/api.md) | The JSON CRUD endpoints, validation, status codes |
-| [Themes](docs/themes.md) | The theme adapters (Tailwind/Bootstrap/Filament/Nova) and writing your own |
-| [Security](docs/security.md) | Disabled-by-default + auth, the access-control lockdown (IP allowlist, token, time-window, throttle), response headers |
+### Guides
 
-Rendered docs: **<https://opensource.simtabi.com/env-kit-webui/docs/>**.
+- [Installation](docs/installation.md) — requirements, enabling, auth & route config.
+- [Security](docs/security.md) — disabled-by-default + auth, the access-control lockdown (IP allowlist, token, time-window, throttle), response headers.
 
-## Security
+### Reference
 
-See **[SECURITY.md](SECURITY.md)**. The surface is off until enabled, requires auth,
-blocks production writes, and masks secret-shaped values in responses. It can be locked
-down further with an **IP allowlist, a secret token, a time-window, and a throttle**, and
-ships hardening response headers — see **[docs/security.md](docs/security.md)**. Report
-vulnerabilities privately to `opensource@simtabi.com`.
+- [API](docs/api.md) — the JSON CRUD endpoints, validation, status codes.
+- [Themes](docs/themes.md) — the theme adapters (Tailwind/Bootstrap/Filament/Nova) and writing your own.
+
+### Project
+
+- [Changelog](CHANGELOG.md) — release history.
+
+## Stability
+
+Pre-1.0 (0.x) — the public API may change between minor versions. Pin a version before bumping.
+
+## Local development
+
+```bash
+composer test
+```
+
+## Sister packages
+
+- [`laranail/env-kit-headless`](https://github.com/laranail/env-kit-headless) — the engine this web layer drives.
+
+## Community
+
+- [Issues](https://github.com/laranail/env-kit-webui/issues) — bugs + feature requests.
+
+## Contributing & security
+
+The surface is off until enabled, requires auth, blocks production writes, and masks secret-shaped values;
+it can be locked down further (IP allowlist, secret token, time-window, throttle) and ships hardening
+response headers — see [Security](docs/security.md).
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) — workflow + coding standards.
+- [SECURITY.md](SECURITY.md) — report vulnerabilities privately to `opensource@simtabi.com`.
 
 ## License
 
