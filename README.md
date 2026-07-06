@@ -4,9 +4,9 @@
 [![Tests](https://github.com/laranail/env-kit-webui/actions/workflows/ci.yml/badge.svg)](https://github.com/laranail/env-kit-webui/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-> A framework-agnostic web companion for [`laranail/env-kit-headless`](https://opensource.simtabi.com/documentation/laranail/env-kit-headless/) — a JSON CRUD API and a themed HTML panel that **drive the engine**, never re-implement it. Disabled by default, auth-gated, and production-write-blocked.
+> A framework-agnostic web companion for [`laranail/env-kit`](https://opensource.simtabi.com/documentation/laranail/env-kit/) — a JSON CRUD API and a themed HTML panel that **drive the engine**, never re-implement it. Disabled by default, auth-gated, and production-write-blocked.
 
-Requires PHP `^8.4.1`, Laravel `^13`, and `laranail/env-kit-headless`.
+Requires PHP `^8.4.1`, Laravel `^13`, and `laranail/env-kit`.
 
 ## Install
 

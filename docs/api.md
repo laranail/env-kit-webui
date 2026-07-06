@@ -60,7 +60,7 @@ touched, and engine guards map to HTTP statuses:
 | `200` / `201` | Success |
 | `404` | Surface disabled, or unknown key |
 | `422` | Validation failure (malformed key/value) |
-| `403` | Protected / non-editable key, production-write without override, a denied IP / token / schedule / surface gate, or an **update-gate denial / observer veto** ([authorization](https://opensource.simtabi.com/env-kit-headless/docs/authorization)) |
+| `403` | Protected / non-editable key, production-write without override, a denied IP / token / schedule / surface gate, or an **update-gate denial / observer veto** ([authorization](https://opensource.simtabi.com/env-kit/docs/authorization)) |
 | `429` | Throttled (see `env-kit-webui.throttle`) |
 
 Every write flows through the engine's atomic, backed-up, audited commit path —

@@ -1,13 +1,13 @@
 # Contributing
 
 Thanks for your interest in improving `laranail/env-kit-webui` — the
-framework-agnostic web UI/UX companion for `laranail/env-kit-headless`.
+framework-agnostic web UI/UX companion for `laranail/env-kit`.
 
 ## Requirements
 
 - PHP **8.4.1+**
 - Laravel **13**
-- This package depends on `laranail/env-kit-headless`. For local development,
+- This package depends on `laranail/env-kit`. For local development,
   `composer install` resolves it via a `path` repository pointed at
   `../headless`, so clone both side by side under the same parent directory.
 

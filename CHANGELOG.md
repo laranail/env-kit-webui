@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-07-06
+
+### Changed
+
+- Depends on **`laranail/env-kit ^0.5`** (the engine's new name — formerly
+  `laranail/env-kit-headless`); all references updated. Resolved via a VCS
+  repository entry until the Packagist submission.
+
+### Removed
+
+- Internal development artifacts no longer ship in the repository tree.
+
 ## [0.3.0] - 2026-06-29
 
 ### Added
@@ -85,7 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial pre-release of `laranail/env-kit-webui`, a framework-agnostic web
-  UI/UX companion for `laranail/env-kit-headless`. The package holds no engine
+  UI/UX companion for `laranail/env-kit`. The package holds no engine
   logic — its web layer DRIVES the headless `EnvKit` engine.
 - HTTP surface that is **disabled by default**, **auth-gated**, and
   **production-write-blocked**, so the panel and API never expose `.env`

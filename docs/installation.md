@@ -3,7 +3,7 @@
 ## Requirements
 
 - PHP 8.4.1+ and Laravel 13
-- [`laranail/env-kit-headless`](https://github.com/laranail/env-kit-headless) (the engine)
+- [`laranail/env-kit`](https://github.com/laranail/env-kit) (the engine)
 
 ## Install
 
@@ -46,7 +46,7 @@ The engine's own production-write guard still applies on top of this.
 
 ## Local development
 
-This package depends on the unpublished `laranail/env-kit-headless`. For local
+This package depends on the unpublished `laranail/env-kit`. For local
 development, the repo's `composer.json` declares a `path` repository to `../headless`
 so Composer resolves the engine from your working copy.
 

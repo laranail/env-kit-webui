@@ -33,7 +33,7 @@ abstract class TestCase extends Orchestra
         // The dev path-repo symlink prevents the headless provider's auto
         // config-merge under Testbench (real installs from Packagist merge fine);
         // load the engine defaults explicitly so tests mirror production.
-        $engineConfig = dirname(__DIR__).'/vendor/laranail/env-kit-headless/config/env-kit.php';
+        $engineConfig = dirname(__DIR__).'/vendor/laranail/env-kit/config/env-kit.php';
         if (is_file($engineConfig)) {
             $app['config']->set('env-kit', require $engineConfig);
         }
