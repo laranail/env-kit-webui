@@ -29,7 +29,7 @@ abstract class AbstractThemeAdapter implements ThemeAdapterInterface
             $classes['root'] = trim(($classes['root'] ?? '').' dark');
         }
 
-        return app(ViewFactory::class)->make('env-kit-webui::panel', [
+        return app(ViewFactory::class)->make('laranail-env-kit-webui::panel', [
             'vm' => $viewModel,
             'theme' => $classes,
         ]);

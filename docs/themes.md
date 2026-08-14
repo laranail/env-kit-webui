@@ -30,7 +30,7 @@ root class; every built-in theme ships `dark:` variants:
 
 ## How it works
 
-All themes render one Blade view (`env-kit-webui::panel`), parameterised by a CSS
+All themes render one Blade view (`laranail-env-kit-webui::panel`), parameterised by a CSS
 class map — there is no per-theme view duplication. The view is fed an
 `EnvKitViewModel` built from the engine (keys/values with secrets masked).
 

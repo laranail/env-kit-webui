@@ -68,7 +68,7 @@ final class EnvKitPanelComponent extends Component
 
     public function render(): View
     {
-        return app(ViewFactory::class)->make('env-kit-webui::livewire.env-kit-panel');
+        return app(ViewFactory::class)->make('laranail-env-kit-webui::livewire.env-kit-panel');
     }
 
     private function refreshVariables(): void

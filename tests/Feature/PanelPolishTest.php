@@ -16,7 +16,7 @@ it('renders translatable UI strings', function () {
 });
 
 it('honours an overridden translation line', function () {
-    app('translator')->addLines(['messages.key' => 'Clé'], 'en', 'env-kit-webui');
+    app('translator')->addLines(['messages.key' => 'Clé'], 'en', 'laranail-env-kit-webui');
 
     $this->get('env-kit')->assertOk()->assertSee('Clé');
 });

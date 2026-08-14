@@ -21,7 +21,7 @@ final class EnvKitPage extends Page
 
     protected static ?string $slug = 'env-kit';
 
-    protected string $view = 'env-kit-webui::filament.env-kit-page';
+    protected string $view = 'laranail-env-kit-webui::filament.env-kit-page';
 
     /** Honour the same disabled-by-default + gate policy as the HTTP surface. */
     public static function canAccess(): bool

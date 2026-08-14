@@ -2,8 +2,8 @@
     <table>
         <thead>
             <tr>
-                <th scope="col">{{ __('env-kit-webui::messages.key') }}</th>
-                <th scope="col">{{ __('env-kit-webui::messages.value') }}</th>
+                <th scope="col">{{ __('laranail-env-kit-webui::messages.key') }}</th>
+                <th scope="col">{{ __('laranail-env-kit-webui::messages.value') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="2">{{ __('env-kit-webui::messages.empty') }}</td>
+                    <td colspan="2">{{ __('laranail-env-kit-webui::messages.empty') }}</td>
                 </tr>
             @endforelse
         </tbody>

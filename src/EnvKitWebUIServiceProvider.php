@@ -44,8 +44,8 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'env-kit-webui');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'env-kit-webui');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'laranail-env-kit-webui');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laranail-env-kit-webui');
 
         $this->registerThrottle();
 
