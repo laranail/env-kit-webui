@@ -69,7 +69,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Simtabi\\Laranail\\EnvKit\\WebUI\\EnvKitWebUIServiceProvider"
+                "Simtabi\\Laranail\\EnvKit\\WebUI\\Providers\\EnvKitWebUIServiceProvider"
             ]
         },
         "branch-alias": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Simtabi\Laranail\EnvKit\WebUI;
+namespace Simtabi\Laranail\EnvKit\WebUI\Providers;
 
 use Composer\InstalledVersions;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -44,8 +44,8 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'laranail-env-kit-webui');
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laranail-env-kit-webui');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'laranail-env-kit-webui');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'laranail-env-kit-webui');
 
         $this->registerThrottle();
 
@@ -105,7 +105,7 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
                 is_array($middleware) ? array_values($middleware) : $fallbackMiddleware,
             ),
         ], function () use ($routeFile): void {
-            $this->loadRoutesFrom(__DIR__.'/../routes/'.$routeFile);
+            $this->loadRoutesFrom(__DIR__.'/../../routes/'.$routeFile);
         });
     }
 }

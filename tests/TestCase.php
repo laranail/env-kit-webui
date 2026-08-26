@@ -9,7 +9,7 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Simtabi\Laranail\EnvKit\Headless\Contracts\EnvKitInterface;
 use Simtabi\Laranail\EnvKit\Headless\EnvKitServiceProvider;
-use Simtabi\Laranail\EnvKit\WebUI\EnvKitWebUIServiceProvider;
+use Simtabi\Laranail\EnvKit\WebUI\Providers\EnvKitWebUIServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
