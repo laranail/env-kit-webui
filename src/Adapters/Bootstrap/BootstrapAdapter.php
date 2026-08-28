@@ -16,12 +16,12 @@ final class BootstrapAdapter extends AbstractThemeAdapter
     protected function classes(): array
     {
         return [
-            'body' => 'container py-4',
+            'body'    => 'container py-4',
             'heading' => 'h3 mb-3',
             'warning' => 'alert alert-danger',
-            'table' => 'table table-striped',
-            'row' => '',
-            'cell' => '',
+            'table'   => 'table table-striped',
+            'row'     => '',
+            'cell'    => '',
         ];
     }
 }

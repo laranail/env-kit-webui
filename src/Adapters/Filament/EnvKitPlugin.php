@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
 
 /**
  * Registers the EnvKit page on a Filament panel:
@@ -16,6 +16,11 @@ use Filament\Panel;
  */
 final class EnvKitPlugin implements Plugin
 {
+    public static function make(): static
+    {
+        return new self;
+    }
+
     public function getId(): string
     {
         return 'env-kit-webui';
@@ -26,13 +31,5 @@ final class EnvKitPlugin implements Plugin
         $panel->pages([EnvKitPage::class]);
     }
 
-    public function boot(Panel $panel): void
-    {
-        //
-    }
-
-    public static function make(): static
-    {
-        return new self;
-    }
+    public function boot(Panel $panel): void {}
 }

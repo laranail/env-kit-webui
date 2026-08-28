@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Tests;
 
-use Illuminate\Support\Facades\Facade;
 use Livewire\LivewireServiceProvider;
+use Illuminate\Support\Facades\Facade;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Simtabi\Laranail\EnvKit\Headless\Contracts\EnvKitInterface;
 use Simtabi\Laranail\EnvKit\Headless\Providers\EnvKitServiceProvider;
@@ -25,7 +25,7 @@ abstract class TestCase extends Orchestra
 
     protected function defineEnvironment($app): void
     {
-        $app['config']->set('app.key', 'base64:'.base64_encode(str_repeat('k', 32)));
+        $app['config']->set('app.key', 'base64:' . base64_encode(str_repeat('k', 32)));
         // Drop auth in tests so we exercise the enabled-gate + engine wiring directly.
         $app['config']->set('env-kit-webui.route.middleware', ['api']);
         $app['config']->set('env-kit-webui.route.web_middleware', ['web']);
@@ -33,7 +33,7 @@ abstract class TestCase extends Orchestra
         // The dev path-repo symlink prevents the headless provider's auto
         // config-merge under Testbench (real installs from Packagist merge fine);
         // load the engine defaults explicitly so tests mirror production.
-        $engineConfig = dirname(__DIR__).'/vendor/laranail/env-kit/config/env-kit.php';
+        $engineConfig = dirname(__DIR__) . '/vendor/laranail/env-kit/config/env-kit.php';
         if (is_file($engineConfig)) {
             $app['config']->set('env-kit', require $engineConfig);
         }
@@ -42,16 +42,16 @@ abstract class TestCase extends Orchestra
     /** Point the engine at a fresh temp .env and rebind it. */
     protected function bindEnv(string $contents): string
     {
-        $dir = sys_get_temp_dir().'/envkit-webui-'.bin2hex(random_bytes(5));
+        $dir = sys_get_temp_dir() . '/envkit-webui-' . bin2hex(random_bytes(5));
         @mkdir($dir, 0777, true);
-        $path = $dir.'/.env';
+        $path = $dir . '/.env';
         file_put_contents($path, $contents);
 
         config([
-            'env-kit.path' => $path,
-            'env-kit.backup_path' => $dir.'/backups',
+            'env-kit.path'          => $path,
+            'env-kit.backup_path'   => $dir . '/backups',
             'env-kit.audit.enabled' => false,
-            'env-kit.auto_backup' => false,
+            'env-kit.auto_backup'   => false,
         ]);
 
         $this->app->forgetInstance(EnvKitInterface::class);

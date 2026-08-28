@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Adapters\Nova;
 
+use Laravel\Nova\Tool;
 use Illuminate\Http\Request;
 use Laravel\Nova\Menu\MenuSection;
-use Laravel\Nova\Tool;
 
 /**
  * A Laravel Nova tool that links the Nova sidebar to the EnvKit web panel.
@@ -24,10 +24,7 @@ use Laravel\Nova\Tool;
  */
 final class EnvKitTool extends Tool
 {
-    public function boot(): void
-    {
-        //
-    }
+    public function boot(): void {}
 
     public function menu(Request $request): MenuSection
     {

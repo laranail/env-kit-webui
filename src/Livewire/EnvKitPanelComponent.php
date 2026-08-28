@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Livewire;
 
-use Illuminate\Contracts\View\Factory as ViewFactory;
-use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Illuminate\Contracts\View\View;
 use Simtabi\Laranail\EnvKit\Headless\EnvKit;
-use Simtabi\Laranail\EnvKit\Headless\Exceptions\EnvKitException;
-use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
+use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
+use Simtabi\Laranail\EnvKit\Headless\Exceptions\EnvKitException;
 
 /**
  * Optional reactive panel. Registered only when Livewire is installed (the
@@ -79,8 +79,8 @@ final class EnvKitPanelComponent extends Component
         $this->variables = [];
         foreach ($this->engine()->all() as $key => $value) {
             $this->variables[] = [
-                'key' => $key,
-                'value' => $reveal ? $value : $redactor->forKey($key, $value),
+                'key'    => $key,
+                'value'  => $reveal ? $value : $redactor->forKey($key, $value),
                 'secret' => $redactor->isSecretKey($key),
             ];
         }

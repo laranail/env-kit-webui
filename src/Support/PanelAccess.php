@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Support;
 
+use Throwable;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -61,7 +62,7 @@ final class PanelAccess
             return self::withinRange($schedule, $now, $tz)
                 && self::onAllowedDay($schedule, $now)
                 && self::withinDailyWindow($schedule, $now);
-        } catch (\Throwable) {
+        } catch (Throwable) {
             // A malformed schedule (bad timezone / from / until) fails CLOSED — deny
             // rather than 500, so a config typo can't silently open the surface.
             return false;

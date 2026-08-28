@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\EnvKit\WebUI\Extension;
 
 use Illuminate\Contracts\Config\Repository;
-use Simtabi\Laranail\EnvKit\WebUI\Adapters\Bootstrap\BootstrapAdapter;
-use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\FilamentAdapter;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Nova\NovaAdapter;
+use Simtabi\Laranail\EnvKit\WebUI\Contracts\ThemeAdapterInterface;
+use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\FilamentAdapter;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Tailwind\TailwindAdapter;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Unstyled\UnstyledAdapter;
-use Simtabi\Laranail\EnvKit\WebUI\Contracts\ThemeAdapterInterface;
+use Simtabi\Laranail\EnvKit\WebUI\Adapters\Bootstrap\BootstrapAdapter;
 
 /**
  * Theme adapter registry. The framework-agnostic themes always register; the

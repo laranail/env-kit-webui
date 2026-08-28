@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Adapters;
 
-use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Simtabi\Laranail\EnvKit\WebUI\Contracts\ThemeAdapterInterface;
 use Simtabi\Laranail\EnvKit\WebUI\Http\ViewModels\EnvKitViewModel;
 
@@ -18,20 +18,20 @@ abstract class AbstractThemeAdapter implements ThemeAdapterInterface
 {
     abstract public function name(): string;
 
-    /** @return array<string, string> */
-    abstract protected function classes(): array;
-
     public function render(EnvKitViewModel $viewModel): View
     {
         $classes = $this->classes();
 
         if (config('env-kit-webui.dark_mode') === 'dark') {
-            $classes['root'] = trim(($classes['root'] ?? '').' dark');
+            $classes['root'] = trim(($classes['root'] ?? '') . ' dark');
         }
 
         return app(ViewFactory::class)->make('laranail-env-kit-webui::panel', [
-            'vm' => $viewModel,
+            'vm'    => $viewModel,
             'theme' => $classes,
         ]);
     }
+
+    /** @return array<string, string> */
+    abstract protected function classes(): array;
 }

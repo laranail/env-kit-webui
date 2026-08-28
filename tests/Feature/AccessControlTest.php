@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
-use Simtabi\Laranail\EnvKit\WebUI\Events\AccessDenied;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
+use Simtabi\Laranail\EnvKit\WebUI\Events\AccessDenied;
 
 uses(TestCase::class);
 

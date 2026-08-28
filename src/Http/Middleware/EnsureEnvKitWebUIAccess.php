@@ -23,9 +23,9 @@ class EnsureEnvKitWebUIAccess
 
         $reason = match (true) {
             ! PanelAccess::ipAllowed($request) => 'ip',
-            ! PanelAccess::withinSchedule() => 'schedule',
-            ! PanelAccess::gatePasses() => 'gate',
-            default => null,
+            ! PanelAccess::withinSchedule()    => 'schedule',
+            ! PanelAccess::gatePasses()        => 'gate',
+            default                            => null,
         };
 
         if ($reason !== null) {

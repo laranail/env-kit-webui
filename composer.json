@@ -97,5 +97,13 @@
             "type": "vcs",
             "url": "https://github.com/laranail/env-kit"
         }
-    ]
+    ],
+    "scripts": {
+        "pint": "vendor/bin/pint --test --config vendor/laranail/package-tools/pint.json",
+        "pint-fix": "vendor/bin/pint --parallel --config vendor/laranail/package-tools/pint.json",
+        "format": "@pint-fix",
+        "lint": [
+            "@pint"
+        ]
+    }
 }

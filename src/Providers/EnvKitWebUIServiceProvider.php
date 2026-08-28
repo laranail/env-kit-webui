@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Providers;
 
+use Livewire\Livewire;
+use Illuminate\Http\Request;
 use Composer\InstalledVersions;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
-use Livewire\Livewire;
+use Simtabi\Laranail\Package\Tools\Package;
 use Simtabi\Laranail\EnvKit\WebUI\Doctor\Checks;
 use Simtabi\Laranail\EnvKit\WebUI\Extension\ThemeManager;
-use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\EnsureEnvKitWebUIAccess;
-use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\EnvKitSecurityHeaders;
-use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\RequireEnvKitWebUIToken;
 use Simtabi\Laranail\EnvKit\WebUI\Livewire\EnvKitPanelComponent;
-use Simtabi\Laranail\Package\Tools\Package;
 use Simtabi\Laranail\Package\Tools\Providers\PackageServiceProvider;
+use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\EnvKitSecurityHeaders;
+use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\EnsureEnvKitWebUIAccess;
+use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\RequireEnvKitWebUIToken;
 use Simtabi\Laranail\Package\Tools\Support\Definitions\AboutSectionDefinition;
 
 final class EnvKitWebUIServiceProvider extends PackageServiceProvider
@@ -78,13 +78,13 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
             $id = $request->user()?->getAuthIdentifier();
             $key = is_scalar($id) ? (string) $id : (string) $request->ip();
 
-            return Limit::perMinute(max(1, $max))->by('env-kit:'.$key);
+            return Limit::perMinute(max(1, $max))->by('env-kit:' . $key);
         });
     }
 
     /**
-     * @param  list<string>  $fallbackMiddleware
-     * @param  list<string>  $prepend
+     * @param list<string> $fallbackMiddleware
+     * @param list<string> $prepend
      */
     private function registerRoutes(
         Repository $config,
@@ -99,13 +99,13 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
         $middleware = $config->get("env-kit-webui.{$middlewareKey}", $fallbackMiddleware);
 
         Route::group([
-            'prefix' => is_string($prefix) ? $prefix : $fallbackPrefix,
+            'prefix'     => is_string($prefix) ? $prefix : $fallbackPrefix,
             'middleware' => array_merge(
                 $prepend,
                 is_array($middleware) ? array_values($middleware) : $fallbackMiddleware,
             ),
         ], function () use ($routeFile): void {
-            $this->loadRoutesFrom($this->packagePath('routes/'.$routeFile));
+            $this->loadRoutesFrom($this->packagePath('routes/' . $routeFile));
         });
     }
 }
