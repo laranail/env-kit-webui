@@ -21,12 +21,12 @@ final class FilamentAdapter extends AbstractThemeAdapter
     protected function classes(): array
     {
         return [
-            'body'    => 'fi-body p-6',
+            'body' => 'fi-body p-6',
             'heading' => 'fi-header-heading text-2xl font-bold mb-4',
             'warning' => 'fi-badge fi-color-danger px-3 py-2 mb-4',
-            'table'   => 'fi-ta-table w-full text-sm',
-            'row'     => 'fi-ta-row',
-            'cell'    => 'fi-ta-cell px-4 py-2',
+            'table' => 'fi-ta-table w-full text-sm',
+            'row' => 'fi-ta-row',
+            'cell' => 'fi-ta-cell px-4 py-2',
         ];
     }
 }

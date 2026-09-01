@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\Config\Repository;
-use Simtabi\Laranail\EnvKit\WebUI\Extension\ThemeManager;
-use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
+use Illuminate\Contracts\View\View;
 use Simtabi\Laranail\EnvKit\Headless\Contracts\EnvKitInterface;
+use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
+use Simtabi\Laranail\EnvKit\WebUI\Extension\ThemeManager;
 use Simtabi\Laranail\EnvKit\WebUI\Http\ViewModels\EnvKitViewModel;
 
 /** Renders the read-only HTML panel through the active theme adapter. */
@@ -30,8 +30,8 @@ final class PanelController
         $variables = [];
         foreach ($this->env->all() as $key => $value) {
             $variables[] = [
-                'key'    => $key,
-                'value'  => $reveal ? $value : $this->redactor->forKey($key, $value),
+                'key' => $key,
+                'value' => $reveal ? $value : $this->redactor->forKey($key, $value),
                 'secret' => $this->redactor->isSecretKey($key),
             ];
         }

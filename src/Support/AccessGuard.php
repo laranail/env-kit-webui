@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Support;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Simtabi\Laranail\EnvKit\WebUI\Events\AccessDenied;
 
 /** Logs + announces an access denial, then aborts — shared by the access middleware. */
@@ -20,9 +20,9 @@ final class AccessGuard
         Log::channel(is_string($channel) && $channel !== '' ? $channel : null)
             ->warning('EnvKit WebUI access denied', [
                 'reason' => $reason,
-                'ip'     => $request->ip(),
-                'path'   => $request->path(),
-                'user'   => $userId,
+                'ip' => $request->ip(),
+                'path' => $request->path(),
+                'user' => $userId,
             ]);
 
         event(new AccessDenied($reason, $request->ip(), $request->path(), $userId));

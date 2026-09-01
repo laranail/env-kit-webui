@@ -7,15 +7,15 @@ namespace Simtabi\Laranail\EnvKit\WebUI\Http\Controllers;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Simtabi\Laranail\EnvKit\Headless\EnvKit;
-use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\EnvKitException;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\NotEditableException;
-use Simtabi\Laranail\EnvKit\Headless\Exceptions\WriteVetoedException;
-use Simtabi\Laranail\EnvKit\Headless\Exceptions\ProtectedKeyException;
-use Simtabi\Laranail\EnvKit\WebUI\Http\Requests\StoreEnvVariableRequest;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\ProductionGuardException;
-use Simtabi\Laranail\EnvKit\WebUI\Http\Requests\UpdateEnvVariableRequest;
+use Simtabi\Laranail\EnvKit\Headless\Exceptions\ProtectedKeyException;
 use Simtabi\Laranail\EnvKit\Headless\Exceptions\UnauthorizedUpdateException;
+use Simtabi\Laranail\EnvKit\Headless\Exceptions\WriteVetoedException;
+use Simtabi\Laranail\EnvKit\Headless\Security\SecretRedactor;
+use Simtabi\Laranail\EnvKit\WebUI\Http\Requests\StoreEnvVariableRequest;
+use Simtabi\Laranail\EnvKit\WebUI\Http\Requests\UpdateEnvVariableRequest;
 
 /**
  * The JSON CRUD surface. Drives the headless {@see EnvKit} engine — every write
@@ -83,8 +83,8 @@ final class EnvController
     private function present(string $key, string $value, bool $reveal): array
     {
         return [
-            'key'    => $key,
-            'value'  => $reveal ? $value : $this->redactor->forKey($key, $value),
+            'key' => $key,
+            'value' => $reveal ? $value : $this->redactor->forKey($key, $value),
             'secret' => $this->redactor->isSecretKey($key),
         ];
     }
