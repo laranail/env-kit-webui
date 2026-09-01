@@ -29,7 +29,7 @@ security-sensitive and restrict it to trusted operators on trusted networks.
 Please report suspected vulnerabilities **privately**. Do **not** open a public
 GitHub issue, pull request, or discussion for a security report.
 
-Email **opensource@simtabi.com** with:
+Email **security@simtabi.com** with:
 
 - A description of the issue and its impact.
 - Steps to reproduce (proof-of-concept where possible).
@@ -39,3 +39,9 @@ You can expect an acknowledgement within **about 3 business days**. We will
 work with you on a fix and coordinate disclosure once a patch is available.
 
 Thank you for helping keep the laranail ecosystem and its users safe.
+
+> **Prefer GitHub private vulnerability reporting** when you can: open it from this
+> repository's Security tab. The report arrives attached to the repo with a draft advisory
+> and a CVE request path already in place. Email is the fallback for anyone who would
+> rather not use GitHub.
+
