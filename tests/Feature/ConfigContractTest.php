@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\RequireEnvKitWebUIToken;
+use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 
 uses(TestCase::class);
@@ -27,7 +29,7 @@ uses(TestCase::class);
  */
 function shippedWebUiConfig(): array
 {
-    return require __DIR__ . '/../../config/env-kit-webui.php';
+    return require __DIR__.'/../../config/env-kit-webui.php';
 }
 
 it('registers its config where the package reads it', function (): void {
@@ -56,7 +58,7 @@ it('reads no configuration at a bare env-kit-webui key', function (): void {
     // no gate abilities), so every occurrence in a config call is a defect.
     $offenders = [];
 
-    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . '/../../src')) as $file) {
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/../../src')) as $file) {
         if ($file->getExtension() !== 'php') {
             continue;
         }
@@ -69,7 +71,7 @@ it('reads no configuration at a bare env-kit-webui key', function (): void {
                 continue;
             }
 
-            $offenders[] = basename($file->getPathname()) . ':' . ($number + 1) . ' — ' . trim($line);
+            $offenders[] = basename($file->getPathname()).':'.($number + 1).' — '.trim($line);
         }
     }
 
@@ -83,10 +85,10 @@ it('can actually be enabled through configuration', function (): void {
     // The end-to-end proof that the config is live rather than merely present. This is the exact
     // behaviour that was off in every deployment: the panel answered 404 no matter what was set.
     config()->set('laranail.env-kit-webui.enabled', true);
-    expect(Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess::enabled())->toBeTrue();
+    expect(PanelAccess::enabled())->toBeTrue();
 
     config()->set('laranail.env-kit-webui.enabled', false);
-    expect(Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess::enabled())->toBeFalse();
+    expect(PanelAccess::enabled())->toBeFalse();
 });
 
 it('honours a configured shared-secret token', function (): void {
@@ -94,7 +96,7 @@ it('honours a configured shared-secret token', function (): void {
     // ignore the setting -- it turned the gate off while reporting nothing.
     config()->set('laranail.env-kit-webui.access.token', 'a-configured-secret');
 
-    $middleware = new Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\RequireEnvKitWebUIToken;
+    $middleware = new RequireEnvKitWebUIToken;
     $passed = false;
 
     try {
