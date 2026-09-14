@@ -91,7 +91,7 @@ final class EnvController
 
     private function reveal(): bool
     {
-        return (bool) config('env-kit-webui.reveal_secrets', false);
+        return (bool) config('laranail.env-kit-webui.reveal_secrets', false);
     }
 
     /** Map engine guard failures to HTTP statuses (messages are secret-safe). */

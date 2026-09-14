@@ -19,7 +19,7 @@ final class Checks
     {
         return [
             new ConfigPresentCheck(
-                ['env-kit-webui config' => 'env-kit-webui'],
+                ['env-kit-webui config' => 'laranail.env-kit-webui'],
                 required: true,
                 name: 'env-kit-webui:config',
                 description: 'Env Kit Web UI config is published',

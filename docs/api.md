@@ -1,6 +1,6 @@
 # JSON API
 
-A REST-ish CRUD surface over the engine, mounted at `config('env-kit-webui.route.prefix')`
+A REST-ish CRUD surface over the engine, mounted at `config('laranail.env-kit-webui.route.prefix')`
 (default `api/v1/env-kit`) behind the configured auth middleware. Every route 404s
 while the surface is disabled.
 
@@ -61,7 +61,7 @@ touched, and engine guards map to HTTP statuses:
 | `404` | Surface disabled, or unknown key |
 | `422` | Validation failure (malformed key/value) |
 | `403` | Protected / non-editable key, production-write without override, a denied IP / token / schedule / surface gate, or an **update-gate denial / observer veto** ([authorization](https://opensource.simtabi.com/env-kit/docs/authorization)) |
-| `429` | Throttled (see `env-kit-webui.throttle`) |
+| `429` | Throttled (see `laranail.env-kit-webui.throttle`) |
 
 Every write flows through the engine's atomic, backed-up, audited commit path —
 the API never writes the file itself.

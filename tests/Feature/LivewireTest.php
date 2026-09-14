@@ -10,7 +10,7 @@ use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 
 uses(TestCase::class);
 
-beforeEach(fn () => config(['env-kit-webui.enabled' => true]));
+beforeEach(fn () => config(['laranail.env-kit-webui.enabled' => true]));
 
 it('lists variables and masks secrets in the reactive panel', function () {
     $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=topsecret123\n");
@@ -46,16 +46,16 @@ it('cancels an edit without writing', function () {
 });
 
 it('the panel-access gate honours enabled (the mount() guard)', function () {
-    config(['env-kit-webui.enabled' => false]);
+    config(['laranail.env-kit-webui.enabled' => false]);
     expect(PanelAccess::allowed())->toBeFalse();
 
-    config(['env-kit-webui.enabled' => true]);
+    config(['laranail.env-kit-webui.enabled' => true]);
     expect(PanelAccess::allowed())->toBeTrue();
 });
 
 it('does not expose any env data when disabled', function () {
     $this->bindEnv("CANARY_KEY=visible\n");
-    config(['env-kit-webui.enabled' => false]);
+    config(['laranail.env-kit-webui.enabled' => false]);
 
     // mount() aborts before reading the engine, so nothing leaks.
     Livewire::test(EnvKitPanelComponent::class)->assertDontSee('CANARY_KEY');

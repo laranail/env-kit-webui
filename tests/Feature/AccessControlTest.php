@@ -11,7 +11,7 @@ use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 
 uses(TestCase::class);
 
-beforeEach(fn () => config(['env-kit-webui.enabled' => true]));
+beforeEach(fn () => config(['laranail.env-kit-webui.enabled' => true]));
 afterEach(fn () => Carbon::setTestNow());
 
 it('passes through with no lockdown configured', function () {
@@ -22,7 +22,7 @@ it('passes through with no lockdown configured', function () {
 
 it('blocks a request from a non-allowlisted IP and allows an allowlisted CIDR', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.access.allowed_ips' => ['10.0.0.0/8']]);
+    config(['laranail.env-kit-webui.access.allowed_ips' => ['10.0.0.0/8']]);
 
     $this->withServerVariables(['REMOTE_ADDR' => '203.0.113.5'])
         ->getJson('api/v1/env-kit/keys')->assertForbidden();
@@ -33,7 +33,7 @@ it('blocks a request from a non-allowlisted IP and allows an allowlisted CIDR', 
 
 it('requires a valid secret token when configured', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.access.token' => 'sekret']);
+    config(['laranail.env-kit-webui.access.token' => 'sekret']);
 
     $this->getJson('api/v1/env-kit/keys')->assertForbidden();
     $this->getJson('api/v1/env-kit/keys', ['X-EnvKit-Token' => 'wrong'])->assertForbidden();
@@ -42,7 +42,7 @@ it('requires a valid secret token when configured', function () {
 
 it('blocks outside the configured daily time-window', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.access.schedule' => ['timezone' => 'UTC', 'start' => '09:00', 'end' => '17:00']]);
+    config(['laranail.env-kit-webui.access.schedule' => ['timezone' => 'UTC', 'start' => '09:00', 'end' => '17:00']]);
 
     Carbon::setTestNow(Carbon::parse('2026-06-30 03:00:00', 'UTC'));
     $this->getJson('api/v1/env-kit/keys')->assertForbidden();
@@ -53,14 +53,14 @@ it('blocks outside the configured daily time-window', function () {
 
 it('fails closed (403, not 500) on a malformed schedule', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.access.schedule' => ['timezone' => 'Not/AZone']]);
+    config(['laranail.env-kit-webui.access.schedule' => ['timezone' => 'Not/AZone']]);
 
     $this->getJson('api/v1/env-kit/keys')->assertForbidden();
 });
 
 it('accepts a non-zero-padded daily window', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.access.schedule' => ['timezone' => 'UTC', 'start' => '9:00', 'end' => '17:00']]);
+    config(['laranail.env-kit-webui.access.schedule' => ['timezone' => 'UTC', 'start' => '9:00', 'end' => '17:00']]);
 
     Carbon::setTestNow(Carbon::parse('2026-06-30 12:00:00', 'UTC'));
     $this->getJson('api/v1/env-kit/keys')->assertOk();
@@ -77,7 +77,7 @@ it('sets response-hardening headers', function () {
 
 it('logs + emits AccessDenied and returns 403 when the gate denies', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.gate' => 'manage-env']);
+    config(['laranail.env-kit-webui.gate' => 'manage-env']);
     Gate::define('manage-env', fn () => false);
     Event::fake([AccessDenied::class]);
 
@@ -88,7 +88,7 @@ it('logs + emits AccessDenied and returns 403 when the gate denies', function ()
 
 it('throttles the API once over the limit', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.throttle.per_minute' => 1]);
+    config(['laranail.env-kit-webui.throttle.per_minute' => 1]);
 
     $this->getJson('api/v1/env-kit/keys')->assertOk();
     $this->getJson('api/v1/env-kit/keys')->assertStatus(429);
