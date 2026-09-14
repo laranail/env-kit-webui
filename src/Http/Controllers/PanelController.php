@@ -23,9 +23,9 @@ final class PanelController
 
     public function show(): View
     {
-        $reveal = (bool) $this->config->get('env-kit-webui.reveal_secrets', false);
+        $reveal = (bool) $this->config->get('laranail.env-kit-webui.reveal_secrets', false);
         $adapter = $this->themes->adapter();
-        $prefix = $this->config->get('env-kit-webui.route.prefix', 'api/v1/env-kit');
+        $prefix = $this->config->get('laranail.env-kit-webui.route.prefix', 'api/v1/env-kit');
 
         $variables = [];
         foreach ($this->env->all() as $key => $value) {

@@ -8,14 +8,14 @@ uses(TestCase::class);
 
 it('404s when the web UI is disabled', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.enabled' => false]);
+    config(['laranail.env-kit-webui.enabled' => false]);
 
     $this->getJson('api/v1/env-kit/keys')->assertNotFound();
 });
 
 it('lists keys and masks secrets when enabled', function () {
     $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=topsecret123\n");
-    config(['env-kit-webui.enabled' => true]);
+    config(['laranail.env-kit-webui.enabled' => true]);
 
     $response = $this->getJson('api/v1/env-kit/keys')->assertOk();
 
@@ -25,7 +25,7 @@ it('lists keys and masks secrets when enabled', function () {
 
 it('shows a single key', function () {
     $this->bindEnv("APP_NAME=Acme\n");
-    config(['env-kit-webui.enabled' => true]);
+    config(['laranail.env-kit-webui.enabled' => true]);
 
     $this->getJson('api/v1/env-kit/keys/APP_NAME')
         ->assertOk()
@@ -35,14 +35,14 @@ it('shows a single key', function () {
 
 it('404s an unknown key', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.enabled' => true]);
+    config(['laranail.env-kit-webui.enabled' => true]);
 
     $this->getJson('api/v1/env-kit/keys/NOPE')->assertNotFound();
 });
 
 it('reveals secrets when configured', function () {
     $this->bindEnv("DB_PASSWORD=topsecret123\n");
-    config(['env-kit-webui.enabled' => true, 'env-kit-webui.reveal_secrets' => true]);
+    config(['laranail.env-kit-webui.enabled' => true, 'laranail.env-kit-webui.reveal_secrets' => true]);
 
     $this->getJson('api/v1/env-kit/keys/DB_PASSWORD')
         ->assertOk()

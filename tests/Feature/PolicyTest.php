@@ -6,7 +6,7 @@ use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 
 uses(TestCase::class);
 
-beforeEach(fn () => config(['env-kit-webui.enabled' => true]));
+beforeEach(fn () => config(['laranail.env-kit-webui.enabled' => true]));
 
 it('honours a custom hidden_keys pattern in the API (masking)', function () {
     $this->bindEnv("APP_NAME=Acme\nWIDGET_API=topsecret123\n");

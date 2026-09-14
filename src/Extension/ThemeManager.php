@@ -50,7 +50,7 @@ final class ThemeManager
     public function adapter(?string $name = null): ThemeAdapterInterface
     {
         if ($name === null) {
-            $configured = $this->config->get('env-kit-webui.theme', 'unstyled');
+            $configured = $this->config->get('laranail.env-kit-webui.theme', 'unstyled');
             $name = is_string($configured) ? $configured : 'unstyled';
         }
 

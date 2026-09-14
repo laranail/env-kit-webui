@@ -7,7 +7,7 @@ use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 uses(TestCase::class);
 
 beforeEach(function () {
-    config(['env-kit-webui.enabled' => true]);
+    config(['laranail.env-kit-webui.enabled' => true]);
 });
 
 it('rejects a stored value that violates the engine schema', function () {

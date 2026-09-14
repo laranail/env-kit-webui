@@ -30,7 +30,7 @@ While disabled, every route returns `404`.
 ## Configure routes & auth
 
 ```php
-// config/env-kit-webui.php
+// config/laranail/env-kit-webui.php
 'route' => [
     'prefix'         => 'api/v1/env-kit',
     'middleware'     => ['api', 'auth:sanctum'], // auth-gated by default

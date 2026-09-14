@@ -74,7 +74,7 @@ final class EnvKitPanelComponent extends Component
     private function refreshVariables(): void
     {
         $redactor = app(SecretRedactor::class);
-        $reveal = (bool) config('env-kit-webui.reveal_secrets', false);
+        $reveal = (bool) config('laranail.env-kit-webui.reveal_secrets', false);
 
         $this->variables = [];
         foreach ($this->engine()->all() as $key => $value) {

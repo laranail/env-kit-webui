@@ -9,7 +9,7 @@ use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 uses(TestCase::class);
 
 beforeEach(function () {
-    config(['env-kit-webui.enabled' => true]);
+    config(['laranail.env-kit-webui.enabled' => true]);
 });
 
 it('creates a key via POST', function () {

@@ -16,7 +16,7 @@ final class AccessGuard
     {
         $userId = self::userId($request);
 
-        $channel = config('env-kit-webui.access.log_channel');
+        $channel = config('laranail.env-kit-webui.access.log_channel');
         Log::channel(is_string($channel) && $channel !== '' ? $channel : null)
             ->warning('EnvKit WebUI access denied', [
                 'reason' => $reason,

@@ -24,7 +24,7 @@ For the in-app surfaces, set an authorization gate so only the right users reach
 editor (on top of the panel/route auth):
 
 ```php
-// config/env-kit-webui.php
+// config/laranail/env-kit-webui.php
 'gate' => 'manage-env',   // a Gate ability checked by the Filament page + Livewire panel
 ```
 
@@ -33,7 +33,7 @@ Gate::define('manage-env', fn ($user) => $user->isAdmin());
 ```
 
 
-Routes run behind the middleware in `config('env-kit-webui.route.middleware')` /
+Routes run behind the middleware in `config('laranail.env-kit-webui.route.middleware')` /
 `web_middleware` — `auth:sanctum` for the API and `web`+`auth` for the panel by
 default. Adjust to your stack; do **not** ship it unauthenticated. The `auth:sanctum`
 default requires `laravel/sanctum` installed and configured — if you use a different
@@ -54,7 +54,7 @@ is no UI affordance to bypass it casually.
 
 ## Access-control lockdown
 
-Beyond `enabled` + auth, harden the surface with `env-kit-webui.access` (all opt-in). The
+Beyond `enabled` + auth, harden the surface with `laranail.env-kit-webui.access` (all opt-in). The
 guards are **package-prepended** to the routes, so they can't be dropped by overriding
 `route.middleware`.
 
