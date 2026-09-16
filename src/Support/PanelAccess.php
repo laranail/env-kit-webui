@@ -21,19 +21,19 @@ final class PanelAccess
 {
     public static function enabled(): bool
     {
-        return (bool) config('env-kit-webui.enabled', false);
+        return (bool) config('laranail.env-kit-webui.enabled', false);
     }
 
     public static function gatePasses(): bool
     {
-        $gate = config('env-kit-webui.gate');
+        $gate = config('laranail.env-kit-webui.gate');
 
         return ! is_string($gate) || Gate::allows($gate);
     }
 
     public static function ipAllowed(?Request $request = null): bool
     {
-        $list = config('env-kit-webui.access.allowed_ips', []);
+        $list = config('laranail.env-kit-webui.access.allowed_ips', []);
         if (! is_array($list) || $list === []) {
             return true;
         }
@@ -48,7 +48,7 @@ final class PanelAccess
 
     public static function withinSchedule(?CarbonImmutable $now = null): bool
     {
-        $schedule = config('env-kit-webui.access.schedule', []);
+        $schedule = config('laranail.env-kit-webui.access.schedule', []);
         if (! is_array($schedule)) {
             return true;
         }

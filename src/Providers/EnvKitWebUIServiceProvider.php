@@ -31,7 +31,7 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
             ->hasAboutSection(
                 AboutSectionDefinition::make('Env Kit Web UI')
                     ->field('Version', fn (): string => (string) InstalledVersions::getPrettyVersion('laranail/env-kit-webui'))
-                    ->field('Enabled', fn (): bool => (bool) config('env-kit-webui.enabled', false)),
+                    ->field('Enabled', fn (): bool => (bool) config('laranail.env-kit-webui.enabled', false)),
             )
             ->hasDoctorChecks(Checks::all());
     }
@@ -69,11 +69,11 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
     private function registerThrottle(): void
     {
         RateLimiter::for('env-kit', function (Request $request): Limit {
-            if (! config('env-kit-webui.throttle.enabled', true)) {
+            if (! config('laranail.env-kit-webui.throttle.enabled', true)) {
                 return Limit::none();
             }
 
-            $configured = config('env-kit-webui.throttle.per_minute', 30);
+            $configured = config('laranail.env-kit-webui.throttle.per_minute', 30);
             $max = is_numeric($configured) ? (int) $configured : 30;
             $id = $request->user()?->getAuthIdentifier();
             $key = is_scalar($id) ? (string) $id : (string) $request->ip();
@@ -95,8 +95,8 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
         string $routeFile,
         array $prepend,
     ): void {
-        $prefix = $config->get("env-kit-webui.{$prefixKey}", $fallbackPrefix);
-        $middleware = $config->get("env-kit-webui.{$middlewareKey}", $fallbackMiddleware);
+        $prefix = $config->get("laranail.env-kit-webui.{$prefixKey}", $fallbackPrefix);
+        $middleware = $config->get("laranail.env-kit-webui.{$middlewareKey}", $fallbackMiddleware);
 
         Route::group([
             'prefix' => is_string($prefix) ? $prefix : $fallbackPrefix,

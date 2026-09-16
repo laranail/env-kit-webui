@@ -38,7 +38,7 @@ it('the Filament plugin registers its page on a panel', function () {
 
 it('records the authenticated user id + reason on an access denial', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.enabled' => true, 'env-kit-webui.access.allowed_ips' => ['10.0.0.0/8']]);
+    config(['laranail.env-kit-webui.enabled' => true, 'laranail.env-kit-webui.access.allowed_ips' => ['10.0.0.0/8']]);
     Event::fake([AccessDenied::class]);
 
     $this->actingAs(new GenericUser(['id' => 7]))
@@ -50,7 +50,7 @@ it('records the authenticated user id + reason on an access denial', function ()
 
 it('maps an engine validation failure (value too long) to 422', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.enabled' => true, 'env-kit.limits.max_value_length' => 5]);
+    config(['laranail.env-kit-webui.enabled' => true, 'env-kit.limits.max_value_length' => 5]);
 
     $this->postJson('api/v1/env-kit/keys', ['key' => 'NEW', 'value' => 'waytoolong'])->assertStatus(422);
 });

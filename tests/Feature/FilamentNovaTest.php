@@ -12,13 +12,13 @@ use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 uses(TestCase::class);
 
 it('the Filament page honours the enabled flag and the optional gate', function () {
-    config(['env-kit-webui.enabled' => false]);
+    config(['laranail.env-kit-webui.enabled' => false]);
     expect(EnvKitPage::canAccess())->toBeFalse(); // disabled → no access
 
-    config(['env-kit-webui.enabled' => true, 'env-kit-webui.gate' => null]);
+    config(['laranail.env-kit-webui.enabled' => true, 'laranail.env-kit-webui.gate' => null]);
     expect(EnvKitPage::canAccess())->toBeTrue(); // enabled, no gate
 
-    config(['env-kit-webui.gate' => 'manage-env']);
+    config(['laranail.env-kit-webui.gate' => 'manage-env']);
     Gate::define('manage-env', fn () => false);
     expect(EnvKitPage::canAccess())->toBeFalse(); // gate denies
 });

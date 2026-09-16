@@ -8,7 +8,7 @@ uses(TestCase::class);
 
 beforeEach(function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.enabled' => true]);
+    config(['laranail.env-kit-webui.enabled' => true]);
 });
 
 it('renders translatable UI strings', function () {
@@ -22,7 +22,7 @@ it('honours an overridden translation line', function () {
 });
 
 it('applies the dark root class and dark-mode variants', function () {
-    config(['env-kit-webui.theme' => 'tailwind', 'env-kit-webui.dark_mode' => 'dark']);
+    config(['laranail.env-kit-webui.theme' => 'tailwind', 'laranail.env-kit-webui.dark_mode' => 'dark']);
 
     $this->get('env-kit')
         ->assertOk()
@@ -31,7 +31,7 @@ it('applies the dark root class and dark-mode variants', function () {
 });
 
 it('omits the dark root class in light mode', function () {
-    config(['env-kit-webui.theme' => 'tailwind', 'env-kit-webui.dark_mode' => 'light']);
+    config(['laranail.env-kit-webui.theme' => 'tailwind', 'laranail.env-kit-webui.dark_mode' => 'light']);
 
     $this->get('env-kit')->assertOk()->assertDontSee('class="dark"', false);
 });

@@ -1,7 +1,7 @@
 # Themes
 
 The HTML panel is framework-agnostic. A **theme adapter** maps the panel to one
-presentation framework; the active one is chosen by `config('env-kit-webui.theme')`.
+presentation framework; the active one is chosen by `config('laranail.env-kit-webui.theme')`.
 
 ## Built-in themes
 
@@ -19,11 +19,11 @@ to work. An unknown theme name falls back to `unstyled`.
 
 ## Dark mode
 
-Set `config('env-kit-webui.dark_mode')` to `'dark'` (default `'light'`) to add a `dark`
+Set `config('laranail.env-kit-webui.dark_mode')` to `'dark'` (default `'light'`) to add a `dark`
 root class; every built-in theme ships `dark:` variants:
 
 ```php
-// config/env-kit-webui.php
+// config/laranail/env-kit-webui.php
 'theme'     => 'tailwind',
 'dark_mode' => 'dark',
 ```
@@ -57,7 +57,7 @@ public function boot(ThemeManager $themes): void
 {
     $themes->register(new CorporateTheme);
 }
-// config/env-kit-webui.php → 'theme' => 'corporate'
+// config/laranail/env-kit-webui.php → 'theme' => 'corporate'
 ```
 
 For full control, implement `Contracts\ThemeAdapterInterface` directly and return any

@@ -22,7 +22,7 @@ abstract class AbstractThemeAdapter implements ThemeAdapterInterface
     {
         $classes = $this->classes();
 
-        if (config('env-kit-webui.dark_mode') === 'dark') {
+        if (config('laranail.env-kit-webui.dark_mode') === 'dark') {
             $classes['root'] = trim(($classes['root'] ?? '').' dark');
         }
 

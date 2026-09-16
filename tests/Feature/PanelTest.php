@@ -10,14 +10,14 @@ uses(TestCase::class);
 
 it('404s the panel when disabled', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.enabled' => false]);
+    config(['laranail.env-kit-webui.enabled' => false]);
 
     $this->get('env-kit')->assertNotFound();
 });
 
 it('renders the panel HTML (default unstyled theme), masking secrets', function () {
     $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=topsecret123\n");
-    config(['env-kit-webui.enabled' => true]);
+    config(['laranail.env-kit-webui.enabled' => true]);
 
     $this->get('env-kit')
         ->assertOk()
@@ -28,7 +28,7 @@ it('renders the panel HTML (default unstyled theme), masking secrets', function 
 
 it('renders the configured theme with its classes', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit-webui.enabled' => true, 'env-kit-webui.theme' => 'tailwind']);
+    config(['laranail.env-kit-webui.enabled' => true, 'laranail.env-kit-webui.theme' => 'tailwind']);
 
     $this->get('env-kit')
         ->assertOk()

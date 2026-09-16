@@ -10,13 +10,13 @@ use Simtabi\Laranail\EnvKit\WebUI\Support\AccessGuard;
 
 /**
  * Optional shared-secret gate for the API: requires the `X-EnvKit-Token` header to
- * match `env-kit-webui.access.token` (timing-safe). No-op when no token is configured.
+ * match `laranail.env-kit-webui.access.token` (timing-safe). No-op when no token is configured.
  */
 final class RequireEnvKitWebUIToken
 {
     public function handle(Request $request, Closure $next): mixed
     {
-        $expected = config('env-kit-webui.access.token');
+        $expected = config('laranail.env-kit-webui.access.token');
 
         if (! is_string($expected) || $expected === '') {
             return $next($request); // no token configured → gate is off
