@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\RequireEnvKitWebUIToken;
-use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
+use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
+use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\RequireEnvKitWebUIToken;
 
 uses(TestCase::class);
 
@@ -29,7 +29,7 @@ uses(TestCase::class);
  */
 function shippedWebUiConfig(): array
 {
-    return require __DIR__.'/../../config/env-kit-webui.php';
+    return require __DIR__ . '/../../config/env-kit-webui.php';
 }
 
 it('registers its config where the package reads it', function (): void {
@@ -58,7 +58,7 @@ it('reads no configuration at a bare env-kit-webui key', function (): void {
     // no gate abilities), so every occurrence in a config call is a defect.
     $offenders = [];
 
-    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/../../src')) as $file) {
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . '/../../src')) as $file) {
         if ($file->getExtension() !== 'php') {
             continue;
         }
@@ -71,7 +71,7 @@ it('reads no configuration at a bare env-kit-webui key', function (): void {
                 continue;
             }
 
-            $offenders[] = basename($file->getPathname()).':'.($number + 1).' — '.trim($line);
+            $offenders[] = basename($file->getPathname()) . ':' . ($number + 1) . ' — ' . trim($line);
         }
     }
 

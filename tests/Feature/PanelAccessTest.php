@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
+use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
 
 uses(TestCase::class);
 

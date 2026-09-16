@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Simtabi\Laranail\EnvKit\WebUI\Adapters\AbstractThemeAdapter;
-use Simtabi\Laranail\EnvKit\WebUI\Extension\ThemeManager;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
+use Simtabi\Laranail\EnvKit\WebUI\Extension\ThemeManager;
+use Simtabi\Laranail\EnvKit\WebUI\Adapters\AbstractThemeAdapter;
 
 uses(TestCase::class);
 

@@ -6,8 +6,8 @@ namespace Simtabi\Laranail\EnvKit\WebUI\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Simtabi\Laranail\EnvKit\Headless\Facades\EnvKit;
-use Simtabi\Laranail\EnvKit\Headless\Rules\MatchesEnvSchema;
 use Simtabi\Laranail\EnvKit\Headless\Rules\ValidEnvValue;
+use Simtabi\Laranail\EnvKit\Headless\Rules\MatchesEnvSchema;
 
 /** Validates an updated value for an existing key, against the headless rules + engine schema. */
 final class UpdateEnvVariableRequest extends FormRequest
