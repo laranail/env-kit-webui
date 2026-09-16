@@ -20,12 +20,12 @@ final class NovaAdapter extends AbstractThemeAdapter
     protected function classes(): array
     {
         return [
-            'body' => 'px-6 py-4',
+            'body'    => 'px-6 py-4',
             'heading' => 'text-90 font-normal text-xl mb-4',
             'warning' => 'bg-red-100 text-red-600 rounded p-2 mb-4',
-            'table' => 'w-full table-default',
-            'row' => '',
-            'cell' => 'py-2',
+            'table'   => 'w-full table-default',
+            'row'     => '',
+            'cell'    => 'py-2',
         ];
     }
 }

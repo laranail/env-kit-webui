@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Filament\Contracts\Plugin;
 use Filament\Pages\Page;
+use Filament\Contracts\Plugin;
 use Illuminate\Support\Facades\Gate;
+use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\EnvKitPage;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\EnvKitPlugin;
-use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 
 uses(TestCase::class);
 

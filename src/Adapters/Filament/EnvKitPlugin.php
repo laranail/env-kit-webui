@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
 
 /**
  * Registers the EnvKit page on a Filament panel:

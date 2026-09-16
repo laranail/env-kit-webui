@@ -6,13 +6,13 @@ use Filament\Panel;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Event;
-use Simtabi\Laranail\EnvKit\WebUI\Adapters\Bootstrap\BootstrapAdapter;
+use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
+use Simtabi\Laranail\EnvKit\WebUI\Events\AccessDenied;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\EnvKitPage;
 use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\EnvKitPlugin;
-use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\FilamentAdapter;
-use Simtabi\Laranail\EnvKit\WebUI\Events\AccessDenied;
 use Simtabi\Laranail\EnvKit\WebUI\Http\ViewModels\EnvKitViewModel;
-use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
+use Simtabi\Laranail\EnvKit\WebUI\Adapters\Filament\FilamentAdapter;
+use Simtabi\Laranail\EnvKit\WebUI\Adapters\Bootstrap\BootstrapAdapter;
 
 uses(TestCase::class);
 

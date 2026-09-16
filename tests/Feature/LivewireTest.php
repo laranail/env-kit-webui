@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use Livewire\Livewire;
-use Simtabi\Laranail\EnvKit\Headless\Facades\EnvKit;
-use Simtabi\Laranail\EnvKit\WebUI\Livewire\EnvKitPanelComponent;
-use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
+use Simtabi\Laranail\EnvKit\Headless\Facades\EnvKit;
+use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
+use Simtabi\Laranail\EnvKit\WebUI\Livewire\EnvKitPanelComponent;
 
 uses(TestCase::class);
 

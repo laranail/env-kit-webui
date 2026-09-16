@@ -14,7 +14,7 @@ return [
         'middleware' => ['api', 'auth:sanctum'],
 
         // The HTML panel (read-only) lives on a separate web route group.
-        'web_prefix' => 'env-kit',
+        'web_prefix'     => 'env-kit',
         'web_middleware' => ['web', 'auth'],
     ],
 
@@ -37,11 +37,11 @@ return [
         // `start`/`end`: 'HH:MM' (overnight-aware). `from`/`until`: absolute datetimes.
         'schedule' => [
             'timezone' => null, // null = config('app.timezone')
-            'days' => [],
-            'start' => null,
-            'end' => null,
-            'from' => null,
-            'until' => null,
+            'days'     => [],
+            'start'    => null,
+            'end'      => null,
+            'from'     => null,
+            'until'    => null,
         ],
 
         // Log channel for access denials. null = the default channel.
@@ -50,7 +50,7 @@ return [
 
     // Request throttle for the write API (named limiter 'env-kit').
     'throttle' => [
-        'enabled' => true,
+        'enabled'    => true,
         'per_minute' => 30,
     ],
 
