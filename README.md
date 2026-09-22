@@ -1,8 +1,9 @@
 # laranail/env-kit-webui
 
-[![Latest version on Packagist](https://img.shields.io/packagist/v/laranail/env-kit-webui.svg)](https://packagist.org/packages/laranail/env-kit-webui)
 [![Tests](https://github.com/laranail/env-kit-webui/actions/workflows/ci.yml/badge.svg)](https://github.com/laranail/env-kit-webui/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+`laranail/env-kit-webui` is not published to Packagist, so there is no registry-version badge to show — see [Install](#install).
 
 > A framework-agnostic web companion for [`laranail/env-kit`](https://opensource.simtabi.com/documentation/laranail/env-kit/) — a JSON CRUD API and a themed HTML panel that **drive the engine**, never re-implement it. Disabled by default, auth-gated, and production-write-blocked.
 
