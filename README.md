@@ -20,6 +20,21 @@ php artisan vendor:publish --tag=env-kit-webui-config
 ENV_KIT_WEBUI_ENABLED=true   # turn it on deliberately
 ```
 
+## Quick start
+
+```bash
+# Read one key through the JSON API (secret-shaped values come back masked)
+curl -H "Authorization: Bearer $SANCTUM_TOKEN" -H "Accept: application/json" \
+     https://acme.test/api/v1/env-kit/keys/APP_NAME
+
+# Write one; the engine commits it atomically, with a backup and an audit entry
+curl -X PUT -H "Authorization: Bearer $SANCTUM_TOKEN" -H "Accept: application/json" \
+     -H "Content-Type: application/json" -d '{"value":"smtp.acme.test"}' \
+     https://acme.test/api/v1/env-kit/keys/MAIL_HOST
+```
+
+The full walkthrough is in [JSON API](docs/api.md); everything else is in the [documentation index](#documentation).
+
 ## Documentation
 
 Full documentation is at **[opensource.simtabi.com/documentation/laranail/env-kit-webui](https://opensource.simtabi.com/documentation/laranail/env-kit-webui/)** — what you get, enabling + auth-gating, the JSON API, the HTML panel + themes, and configuration.
