@@ -14,7 +14,7 @@ composer require laranail/env-kit-webui
 The service provider auto-registers. Publish the config:
 
 ```bash
-php artisan vendor:publish --tag=env-kit-webui-config
+php artisan vendor:publish --tag=laranail::env-kit-webui-config
 ```
 
 ## Enable it

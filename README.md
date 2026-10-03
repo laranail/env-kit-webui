@@ -13,14 +13,27 @@ Requires PHP `^8.4.1`, Laravel `^13`, and `laranail/env-kit`.
 
 ```bash
 composer require laranail/env-kit-webui
-php artisan vendor:publish --tag=env-kit-webui-config
+php artisan vendor:publish --tag=laranail::env-kit-webui-config
 ```
 
 ```dotenv
 ENV_KIT_WEBUI_ENABLED=true   # turn it on deliberately
 ```
 
-## Quick start
+## Quick start guide and usage
+
+### Getting started
+
+1. The API routes are auth-gated with `['api', 'auth:sanctum']` by default. Adjust
+   `route.middleware` in the published config to match your auth stack (Sanctum, session, a
+   custom guard).
+2. Optionally set a shared secret, which the API then requires in the `X-EnvKit-Token` header:
+
+   ```dotenv
+   ENV_KIT_WEBUI_TOKEN=
+   ```
+
+### Usage
 
 ```bash
 # Read one key through the JSON API (secret-shaped values come back masked)
