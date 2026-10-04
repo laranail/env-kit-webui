@@ -48,7 +48,8 @@ return [
         'log_channel' => null,
     ],
 
-    // Request throttle for the write API (named limiter 'env-kit').
+    // Request throttle for the JSON API (named limiter 'laranail-env-kit-webui.api';
+    // the bare 'env-kit' name is a deprecated alias of it).
     'throttle' => [
         'enabled'    => true,
         'per_minute' => 30,

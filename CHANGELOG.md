@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `Support\RegisteredNames`, holding the vendor-scoped route-name prefix and limiter name, and
+  `tests/Feature/NamingConventionTest.php`, which reads the live router, `RateLimiter`, Artisan
+  kernel and middleware-alias map and fails on any bare route name, limiter, command or alias this
+  package owns.
+
+### Changed
+
+- **Route names are vendor-scoped.** `env-kit.keys.{index,show,store,update,destroy}` and
+  `env-kit.panel` are now registered as `laranail-env-kit-webui.keys.*` and
+  `laranail-env-kit-webui.panel`. `env-kit.*` is also the engine's (`laranail/env-kit`) own
+  namespace, so the bare names were a collision waiting to happen.
+- **The API rate limiter is vendor-scoped.** The routes now use `throttle:laranail-env-kit-webui.api`
+  instead of `throttle:env-kit`. The limit and its bucket key are unchanged.
+
+### Deprecated
+
+- The bare route names `env-kit.keys.*` and `env-kit.panel`. They still resolve through `route()`
+  via `URL::resolveMissingNamedRoutesUsing()` (chained to any resolver already registered) and log
+  a warning naming the replacement. `Route::has()` and `routeIs()` do not consult that hook; use
+  the scoped names there. Earliest removal: the next minor after 0.1.
+- The bare `env-kit` rate limiter. It is still registered, delegates to the same limit, and logs a
+  warning naming `laranail-env-kit-webui.api`. Earliest removal: the next minor after 0.1.
+
 ## [0.1.0] - 2026-07-11
 
 ### Fixed

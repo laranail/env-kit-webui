@@ -48,6 +48,31 @@ PUT    /api/v1/env-kit/keys/MAIL_HOST   { "value": "smtp.new.test" }
 DELETE /api/v1/env-kit/keys/OLD_KEY
 ```
 
+## Route and limiter names
+
+Every route is named under `laranail-env-kit-webui.*`, and the API is throttled by the named
+limiter `laranail-env-kit-webui.api` (its limit comes from `laranail.env-kit-webui.throttle`).
+
+| Route name | Method | Path (default prefix) |
+|------------|--------|-----------------------|
+| `laranail-env-kit-webui.keys.index` | `GET` | `api/v1/env-kit/keys` |
+| `laranail-env-kit-webui.keys.show` | `GET` | `api/v1/env-kit/keys/{key}` |
+| `laranail-env-kit-webui.keys.store` | `POST` | `api/v1/env-kit/keys` |
+| `laranail-env-kit-webui.keys.update` | `PUT` / `PATCH` | `api/v1/env-kit/keys/{key}` |
+| `laranail-env-kit-webui.keys.destroy` | `DELETE` | `api/v1/env-kit/keys/{key}` |
+| `laranail-env-kit-webui.panel` | `GET` | `env-kit` |
+
+```php
+route('laranail-env-kit-webui.keys.show', ['key' => 'APP_NAME']);
+```
+
+> **Deprecated aliases.** The bare names these replaced — `env-kit.keys.*`, `env-kit.panel` and
+> the `env-kit` limiter — still work: `route('env-kit.panel')` resolves to the scoped route and
+> `throttle:env-kit` applies the same limit, each logging a warning that names the replacement.
+> They are removed no earlier than the next minor after 0.1. Two things do not follow the alias:
+> `Route::has('env-kit.panel')` and `request()->routeIs('env-kit.*')` ask the route collection
+> directly, so use the scoped names there.
+
 ## Validation & status codes
 
 Input is validated with the **headless rules** (`ValidEnvKey`, `ValidEnvValue`,
