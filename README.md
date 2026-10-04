@@ -48,7 +48,7 @@ curl -X PUT -H "Authorization: Bearer $SANCTUM_TOKEN" -H "Accept: application/js
 
 The full walkthrough is in [JSON API](docs/api.md); everything else is in the [documentation index](#documentation).
 
-## Documentation
+## <a name="documentation"></a>Documentation
 
 Full documentation is at **[opensource.simtabi.com/documentation/laranail/env-kit-webui](https://opensource.simtabi.com/documentation/laranail/env-kit-webui/)** — what you get, enabling + auth-gating, the JSON API, the HTML panel + themes, and configuration.
 
