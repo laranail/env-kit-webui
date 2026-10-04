@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Cache\RateLimiter;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Console\Kernel;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 use Simtabi\Laranail\EnvKit\WebUI\Support\RegisteredNames;
