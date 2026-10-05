@@ -11,8 +11,9 @@ parameters:
         # at runtime — only loaded when a consumer with Nova references it.
         - src/Adapters/Nova/EnvKitTool.php
     ignoreErrors:
-        # The `laranail-env-kit-webui::` view namespace is registered at RUNTIME by the service
-        # provider (package-tools' bootPackageViews()), and PHPStan does not execute that — so
+        # The `laranail/env-kit-webui::` and `laranail-env-kit-webui::` view namespaces are
+        # registered at RUNTIME by the service provider (loadViewsFrom() plus package-tools'
+        # NamespaceForms::mirror()), and PHPStan does not execute that — so
         # larastan cannot resolve the literal to a file and reports it as a plain string rather
         # than a view-string. Both views do exist: resources/views/panel.blade.php and
         # resources/views/livewire/env-kit-panel.blade.php.

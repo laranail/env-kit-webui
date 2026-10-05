@@ -7,12 +7,24 @@ namespace Simtabi\Laranail\EnvKit\WebUI\Tests;
 use Livewire\LivewireServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Simtabi\Laranail\EnvKit\WebUI\Support\DeprecationNotices;
 use Simtabi\Laranail\EnvKit\Headless\Contracts\EnvKitInterface;
 use Simtabi\Laranail\EnvKit\Headless\Providers\EnvKitServiceProvider;
 use Simtabi\Laranail\EnvKit\WebUI\Providers\EnvKitWebUIServiceProvider;
+use Simtabi\Laranail\Package\Tools\Support\Routing\BareRouteNameAliases;
 
 abstract class TestCase extends Orchestra
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Deprecated names are announced once per PROCESS by design, so a test
+        // asserting a notice must not depend on whether an earlier test fired it.
+        BareRouteNameAliases::forgetWarnings();
+        DeprecationNotices::forget();
+    }
+
     /** @return list<class-string> */
     protected function getPackageProviders($app): array
     {

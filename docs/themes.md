@@ -30,9 +30,15 @@ root class; every built-in theme ships `dark:` variants:
 
 ## How it works
 
-All themes render one Blade view (`laranail-env-kit-webui::panel`), parameterised by a CSS
+All themes render one Blade view (`laranail/env-kit-webui::panel`), parameterised by a CSS
 class map — there is no per-theme view duplication. The view is fed an
 `EnvKitViewModel` built from the engine (keys/values with secrets masked).
+
+Views answer to both `laranail/env-kit-webui::` (canonical) and `laranail-env-kit-webui::`, over
+the same paths, so an override in `resources/views/vendor/laranail-env-kit-webui/` applies to
+either. Translations are registered under both forms too. The package's own views translate
+through `laranail-env-kit-webui::`, so overrides keep living in
+`lang/vendor/laranail-env-kit-webui/`.
 
 ## Custom themes
 
@@ -77,8 +83,26 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-The page embeds the reactive Livewire panel. (Requires `livewire/livewire`, which
-Filament already depends on.)
+The page is served at `{panel}/laranail-env-kit-webui` (route name
+`filament.{panel}.pages.laranail-env-kit-webui`) and embeds the reactive Livewire panel,
+`laranail-env-kit-webui.panel`. (Requires `livewire/livewire`, which Filament already depends
+on.) To embed the panel elsewhere:
+
+```blade
+@livewire('laranail-env-kit-webui.panel')
+```
+
+### Deprecated names
+
+These still work and are removed no earlier than the next minor after 0.1:
+
+| Deprecated | Replacement | How it still works |
+|---|---|---|
+| Page slug `env-kit` | `laranail-env-kit-webui` | `{panel}/env-kit` redirects to the page, keeping the query string, under the old route name `filament.{panel}.pages.env-kit`. |
+| Livewire `env-kit-panel` | `laranail-env-kit-webui.panel` | Still registered for the same component. |
+
+Each raises one `E_USER_DEPRECATED` per process naming the replacement, which Laravel writes to
+the `deprecations` log channel when one is configured.
 
 ## Laravel Nova
 

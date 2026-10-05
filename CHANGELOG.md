@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `tests/Feature/NamingConventionTest.php`, which reads the live router, `RateLimiter`, Artisan
   kernel and middleware-alias map and fails on any bare route name, limiter, command or alias this
   package owns.
+- `Support\DeprecationNotices`, which announces a deprecated Livewire name or Filament slug once
+  per process with `E_USER_DEPRECATED`, and `Adapters\Filament\RedirectLegacySlug`, which answers
+  the page's old URL.
+- `RegisteredNames` constants for the view and translation namespaces, the Livewire panel name and
+  the Filament slug, with their deprecated predecessors.
 
 ### Changed
 
@@ -22,6 +27,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   namespace, so the bare names were a collision waiting to happen.
 - **The API rate limiter is vendor-scoped.** The routes now use `throttle:laranail-env-kit-webui.api`
   instead of `throttle:env-kit`. The limit and its bucket key are unchanged.
+- The deprecated bare route names are served by `laranail/package-tools`' shared
+  `BareRouteNameAliases` (declared with `$package->hasDeprecatedRouteNames()`), replacing the
+  provider's own resolver. Behaviour is unchanged: one logged warning per name, chained to any
+  resolver registered earlier, never shadowing a host route. The warning now reads "the route name
+  [...] is deprecated and will stop resolving no earlier than the next minor after 0.1; use
+  [...]". Requires `laranail/package-tools ^0.1.3`.
+- **The Livewire panel is vendor-scoped:** `laranail-env-kit-webui.panel`, which the Filament page
+  now embeds.
+- **The Filament page slug is vendor-scoped:** `laranail-env-kit-webui`, so the page is served at
+  `{panel}/laranail-env-kit-webui` under the route name
+  `filament.{panel}.pages.laranail-env-kit-webui`.
+- Views and translations are registered under `laranail/env-kit-webui::` as well as
+  `laranail-env-kit-webui::`, over the same paths. The package's own view calls use the slash
+  form; its translation calls stay on the hyphen form, which is where a host's overrides in
+  `lang/vendor/laranail-env-kit-webui/` are read from.
+- `NamingConventionTest` runs on package-tools' `AssertsRegisteredNames`, and also covers the
+  Livewire component, the view and translation namespaces and the Filament slug.
 
 ### Deprecated
 
@@ -31,6 +53,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the scoped names there. Earliest removal: the next minor after 0.1.
 - The bare `env-kit` rate limiter. It is still registered, delegates to the same limit, and logs a
   warning naming `laranail-env-kit-webui.api`. Earliest removal: the next minor after 0.1.
+- The Livewire name `env-kit-panel`. It is still registered for the same component; mounting it
+  raises one `E_USER_DEPRECATED` naming `laranail-env-kit-webui.panel`. Earliest removal: the
+  next minor after 0.1.
+- The Filament page slug `env-kit`. `{panel}/env-kit` redirects to the page, keeping the query
+  string, under the page's old route name `filament.{panel}.pages.env-kit`, and raises one
+  `E_USER_DEPRECATED`. Earliest removal: the next minor after 0.1.
 
 ### Fixed
 

@@ -46,6 +46,12 @@ curl -X PUT -H "Authorization: Bearer $SANCTUM_TOKEN" -H "Accept: application/js
      https://acme.test/api/v1/env-kit/keys/MAIL_HOST
 ```
 
+Route names are `laranail-env-kit-webui.keys.*` and `laranail-env-kit-webui.panel`, the API
+limiter is `laranail-env-kit-webui.api`, the Livewire panel is `laranail-env-kit-webui.panel`,
+and the Filament page slug is `laranail-env-kit-webui`. The older bare names (`env-kit.*`
+routes, the `env-kit` limiter, the `env-kit-panel` component and the `env-kit` page slug) are
+deprecated aliases that still work, each announcing its replacement once.
+
 The full walkthrough is in [JSON API](docs/api.md); everything else is in the [documentation index](#documentation).
 
 ## <a name="documentation"></a>Documentation
