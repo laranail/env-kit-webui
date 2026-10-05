@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\EnvKit\WebUI\Providers;
 
 use Livewire\Livewire;
+use Livewire\Component;
 use Illuminate\Http\Request;
 use Composer\InstalledVersions;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Config\Repository;
@@ -18,6 +17,9 @@ use Simtabi\Laranail\Package\Tools\Package;
 use Simtabi\Laranail\EnvKit\WebUI\Doctor\Checks;
 use Simtabi\Laranail\EnvKit\WebUI\Extension\ThemeManager;
 use Simtabi\Laranail\EnvKit\WebUI\Support\RegisteredNames;
+use Simtabi\Laranail\Package\Tools\Support\NamespaceForms;
+use Simtabi\Laranail\Package\Tools\Enums\DeprecationNotice;
+use Simtabi\Laranail\EnvKit\WebUI\Support\DeprecationNotices;
 use Simtabi\Laranail\EnvKit\WebUI\Livewire\EnvKitPanelComponent;
 use Simtabi\Laranail\Package\Tools\Providers\PackageServiceProvider;
 use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\EnvKitSecurityHeaders;
@@ -30,8 +32,9 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
     /**
      * Deprecated names already warned about. Held for the life of the booted
      * application -- one request under PHP-FPM, one worker under Octane or a
-     * queue worker -- so a page with N links to a bare route name logs one
-     * line, not N.
+     * queue worker -- so the bare limiter logs one line, not one per throttled
+     * request. (The bare route names are announced once per process by
+     * package-tools' BareRouteNameAliases.)
      *
      * @var array<string, true>
      */
@@ -47,7 +50,19 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
                     ->field('Version', fn (): string => (string) InstalledVersions::getPrettyVersion('laranail/env-kit-webui'))
                     ->field('Enabled', fn (): bool => (bool) config('laranail.env-kit-webui.enabled', false)),
             )
-            ->hasDoctorChecks(Checks::all());
+            ->hasDoctorChecks(Checks::all())
+            // Keep the bare `env-kit.*` route names this package used to register
+            // resolving through route(), as deprecated aliases of the scoped names,
+            // with one logged warning per name. Consulted only for a name the router
+            // does not hold, so a host route genuinely named `env-kit.*` still wins,
+            // and chained to any resolver registered before it. `Route::has()` does
+            // not consult it: ask for the scoped name, or
+            // `$package->deprecatedRouteNames()->has()`. Earliest removal of the
+            // bare names: the next minor after 0.1.
+            ->hasDeprecatedRouteNames(
+                prefixes: [RegisteredNames::LEGACY_ROUTE_PREFIX => RegisteredNames::ROUTE_PREFIX],
+                notice: DeprecationNotice::Log,
+            );
     }
 
     public function packageRegistered(): void
@@ -58,11 +73,15 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        $this->loadViewsFrom($this->packagePath('resources/views'), 'laranail-env-kit-webui');
-        $this->loadTranslationsFrom($this->packagePath('resources/lang'), 'laranail-env-kit-webui');
+        $this->loadViewsFrom($this->packagePath('resources/views'), RegisteredNames::NAMESPACE_ALIAS);
+        $this->loadTranslationsFrom($this->packagePath('resources/lang'), RegisteredNames::NAMESPACE_ALIAS);
+
+        // Add the canonical `laranail/env-kit-webui` form over the same paths, in
+        // both registries. The package's own views and classes use it; the hyphen
+        // form stays registered for hosts that already write it.
+        NamespaceForms::mirror($this->app, RegisteredNames::NAMESPACE);
 
         $this->registerThrottle();
-        $this->resolveBareRouteNames();
 
         $config = $this->app->make(Repository::class);
         // The lockdown guards are PREPENDED by the package (not in the overridable
@@ -77,7 +96,18 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
 
         // The reactive panel is optional — registered only when Livewire is present.
         if (class_exists(Livewire::class)) {
-            Livewire::component('env-kit-panel', EnvKitPanelComponent::class);
+            // Scoped name first: Livewire maps a class back to the FIRST name it
+            // was registered under, so snapshots and Livewire::test() use it.
+            Livewire::component(RegisteredNames::LIVEWIRE_PANEL, EnvKitPanelComponent::class);
+
+            // @deprecated The bare `env-kit-panel`, kept so `@livewire('env-kit-panel')`
+            // still renders; mounting it raises one E_USER_DEPRECATED. Earliest
+            // removal: the next minor after 0.1.
+            Livewire::component(RegisteredNames::LEGACY_LIVEWIRE_PANEL, EnvKitPanelComponent::class);
+
+            Livewire::listen('mount', static function (Component $component): void {
+                DeprecationNotices::livewireMounted($component->getName());
+            });
         }
     }
 
@@ -115,50 +145,6 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
 
             return $limit($request);
         });
-    }
-
-    /**
-     * Keep the bare `env-kit.*` route names this package used to register
-     * resolving through `route()`, as deprecated aliases of the scoped names.
-     *
-     * The hook is consulted only when a name is not found, so a host route
-     * genuinely named `env-kit.*` still wins. Laravel holds one resolver, so
-     * any resolver registered before this one is chained rather than replaced.
-     * `Route::has()` does not consult the hook — ask for the scoped name.
-     *
-     * @deprecated Since 0.1 for the bare names it serves. Earliest removal:
-     *             the next minor after 0.1.
-     */
-    private function resolveBareRouteNames(): void
-    {
-        $url = $this->app->make(UrlGenerator::class);
-
-        /** @var callable|null $previous */
-        $previous = (fn (): mixed => $this->missingNamedRouteResolver)->call($url);
-
-        URL::resolveMissingNamedRoutesUsing(
-            function (string $name, mixed $parameters, ?bool $absolute) use ($previous): ?string {
-                $scoped = RegisteredNames::scopedRouteFor($name);
-
-                if ($scoped !== null && Route::has($scoped)) {
-                    $this->warnDeprecatedOnce('route:' . $name, sprintf(
-                        '[laranail/env-kit-webui] The route name "%s" is deprecated; use "%s" instead.',
-                        $name,
-                        $scoped,
-                    ));
-
-                    return URL::route($scoped, $parameters ?? [], $absolute ?? true);
-                }
-
-                if (is_callable($previous)) {
-                    $resolved = $previous($name, $parameters, $absolute);
-
-                    return is_string($resolved) ? $resolved : null;
-                }
-
-                return null;
-            },
-        );
     }
 
     /**

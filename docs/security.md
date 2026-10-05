@@ -15,8 +15,9 @@ While disabled, every API and panel route returns `404` — checked per request,
 the surface can be toggled at runtime.
 
 The **in-app surfaces honour the same switch**: the Filament page's `canAccess()` and
-the Livewire `env-kit-panel` component both refuse (Filament hides it / the component
-403s) unless `enabled` is true — so embedding them anywhere can't bypass the gate.
+the Livewire `laranail-env-kit-webui.panel` component (also reachable through its deprecated
+`env-kit-panel` alias) both refuse (Filament hides it / the component 403s) unless `enabled`
+is true — so embedding them anywhere can't bypass the gate.
 
 ## 2. Auth-gated
 

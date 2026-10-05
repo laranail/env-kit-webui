@@ -1,3 +1,3 @@
 <x-filament-panels::page>
-    @livewire('env-kit-panel')
+    @livewire('laranail-env-kit-webui.panel')
 </x-filament-panels::page>
