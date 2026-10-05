@@ -38,6 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `env-kit.*` route name logged N lines per request, and the bare `env-kit` limiter logged once per
   throttled request for the life of an Octane or queue worker. Each deprecated name now warns once
   for the life of the booted application.
+- The suite configured the engine through the bare `env-kit.*` keys (`path`, `backup_path`,
+  `audit.enabled`, `auto_backup`, `hidden_keys`, `editable_keys`, `schema`,
+  `limits.max_value_length`). `laranail/env-kit` now reads its configuration only at
+  `laranail.env-kit.*`, so against a fresh resolve every one of those overrides was ignored and 13
+  tests ran against the defaults: no temp `.env`, no schema, no allowlist. The tests, and the
+  `docs/api.md` mention of the schema key, now use `laranail.env-kit.*`. No runtime code read the
+  bare keys.
 
 ## [0.1.0] - 2026-07-11
 

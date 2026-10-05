@@ -50,7 +50,7 @@ it('records the authenticated user id + reason on an access denial', function ()
 
 it('maps an engine validation failure (value too long) to 422', function () {
     $this->bindEnv("A=1\n");
-    config(['laranail.env-kit-webui.enabled' => true, 'env-kit.limits.max_value_length' => 5]);
+    config(['laranail.env-kit-webui.enabled' => true, 'laranail.env-kit.limits.max_value_length' => 5]);
 
     $this->postJson('api/v1/env-kit/keys', ['key' => 'NEW', 'value' => 'waytoolong'])->assertStatus(422);
 });

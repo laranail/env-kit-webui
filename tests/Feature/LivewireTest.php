@@ -62,7 +62,7 @@ it('does not expose any env data when disabled', function () {
 });
 
 it('surfaces a guard failure inline instead of crashing', function () {
-    $this->bindEnv("DB_PASSWORD=secret\n", ['env-kit.auto_backup' => false]);
+    $this->bindEnv("DB_PASSWORD=secret\n", ['laranail.env-kit.auto_backup' => false]);
 
     Livewire::test(EnvKitPanelComponent::class)
         ->call('startEditing', 'DB_PASSWORD') // protected key

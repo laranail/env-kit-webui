@@ -10,7 +10,7 @@ beforeEach(fn () => config(['laranail.env-kit-webui.enabled' => true]));
 
 it('honours a custom hidden_keys pattern in the API (masking)', function () {
     $this->bindEnv("APP_NAME=Acme\nWIDGET_API=topsecret123\n");
-    config(['env-kit.hidden_keys' => ['WIDGET_*']]);
+    config(['laranail.env-kit.hidden_keys' => ['WIDGET_*']]);
 
     $response = $this->getJson('api/v1/env-kit/keys')->assertOk();
 
@@ -21,7 +21,7 @@ it('honours a custom hidden_keys pattern in the API (masking)', function () {
 
 it('returns 403 for a write outside the editable allowlist', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit.editable_keys' => ['APP_*']]);
+    config(['laranail.env-kit.editable_keys' => ['APP_*']]);
 
     $this->postJson('api/v1/env-kit/keys', ['key' => 'DB_HOST', 'value' => 'x'])->assertForbidden();
 

@@ -12,7 +12,7 @@ beforeEach(function () {
 
 it('rejects a stored value that violates the engine schema', function () {
     $this->bindEnv("A=1\n");
-    config(['env-kit.schema' => ['PORT' => 'integer']]);
+    config(['laranail.env-kit.schema' => ['PORT' => 'integer']]);
 
     $this->postJson('api/v1/env-kit/keys', ['key' => 'PORT', 'value' => 'not-an-int'])
         ->assertStatus(422)
@@ -24,7 +24,7 @@ it('rejects a stored value that violates the engine schema', function () {
 
 it('validates an updated value against the schema', function () {
     $this->bindEnv("PORT=8080\n");
-    config(['env-kit.schema' => ['PORT' => 'integer']]);
+    config(['laranail.env-kit.schema' => ['PORT' => 'integer']]);
 
     $this->putJson('api/v1/env-kit/keys/PORT', ['value' => 'nope'])
         ->assertStatus(422)

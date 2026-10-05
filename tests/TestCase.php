@@ -35,7 +35,7 @@ abstract class TestCase extends Orchestra
         // load the engine defaults explicitly so tests mirror production.
         $engineConfig = dirname(__DIR__) . '/vendor/laranail/env-kit/config/env-kit.php';
         if (is_file($engineConfig)) {
-            $app['config']->set('env-kit', require $engineConfig);
+            $app['config']->set('laranail.env-kit', require $engineConfig);
         }
     }
 
@@ -48,10 +48,10 @@ abstract class TestCase extends Orchestra
         file_put_contents($path, $contents);
 
         config([
-            'env-kit.path'          => $path,
-            'env-kit.backup_path'   => $dir . '/backups',
-            'env-kit.audit.enabled' => false,
-            'env-kit.auto_backup'   => false,
+            'laranail.env-kit.path'          => $path,
+            'laranail.env-kit.backup_path'   => $dir . '/backups',
+            'laranail.env-kit.audit.enabled' => false,
+            'laranail.env-kit.auto_backup'   => false,
         ]);
 
         $this->app->forgetInstance(EnvKitInterface::class);

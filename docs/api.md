@@ -77,7 +77,7 @@ route('laranail-env-kit-webui.keys.show', ['key' => 'APP_NAME']);
 ## Validation & status codes
 
 Input is validated with the **headless rules** (`ValidEnvKey`, `ValidEnvValue`,
-and `MatchesEnvSchema` — so a configured `env-kit.schema` is enforced over the API
+and `MatchesEnvSchema` — so a configured `laranail.env-kit.schema` is enforced over the API
 exactly as on the CLI; it is a no-op until a schema is defined) before the engine is
 touched, and engine guards map to HTTP statuses:
 
