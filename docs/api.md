@@ -68,7 +68,8 @@ route('laranail-env-kit-webui.keys.show', ['key' => 'APP_NAME']);
 
 > **Deprecated aliases.** The bare names these replaced — `env-kit.keys.*`, `env-kit.panel` and
 > the `env-kit` limiter — still work: `route('env-kit.panel')` resolves to the scoped route and
-> `throttle:env-kit` applies the same limit, each logging a warning that names the replacement.
+> `throttle:env-kit` applies the same limit, each logging a warning that names the replacement
+> (once per name for the life of the booted application, not once per link or request).
 > They are removed no earlier than the next minor after 0.1. Two things do not follow the alias:
 > `Route::has('env-kit.panel')` and `request()->routeIs('env-kit.*')` ask the route collection
 > directly, so use the scoped names there.
@@ -76,7 +77,7 @@ route('laranail-env-kit-webui.keys.show', ['key' => 'APP_NAME']);
 ## Validation & status codes
 
 Input is validated with the **headless rules** (`ValidEnvKey`, `ValidEnvValue`,
-and `MatchesEnvSchema` — so a configured `env-kit.schema` is enforced over the API
+and `MatchesEnvSchema` — so a configured `laranail.env-kit.schema` is enforced over the API
 exactly as on the CLI; it is a no-op until a schema is defined) before the engine is
 touched, and engine guards map to HTTP statuses:
 
