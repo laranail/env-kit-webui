@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `laravel/framework ^13.0` is now declared in `require`. `src/` uses `FormRequest` from `Illuminate\Foundation`, which no `illuminate/*` component ships, so the dependency only arrived through the host application.
 - **Route names are vendor-scoped.** `env-kit.keys.{index,show,store,update,destroy}` and
   `env-kit.panel` are now registered as `laranail-env-kit-webui.keys.*` and
   `laranail-env-kit-webui.panel`. `env-kit.*` is also the engine's (`laranail/env-kit`) own
