@@ -171,3 +171,35 @@ it('keeps the deprecated env-kit limiter working with the same limit', function 
         ->withArgs(static fn (string $message): bool => str_contains($message, RegisteredNames::LIMITER))
         ->atLeast()->once();
 });
+
+it('warns once per deprecated route name, however many links resolve it', function (): void {
+    Log::spy();
+
+    // A page with N links to the same bare name must not log N lines.
+    foreach (range(1, 3) as $ignored) {
+        route('env-kit.panel');
+        route('env-kit.keys.index');
+    }
+
+    Log::shouldHaveReceived('warning')
+        ->withArgs(static fn (string $message): bool => str_contains($message, '"env-kit.panel"'))
+        ->once();
+    Log::shouldHaveReceived('warning')
+        ->withArgs(static fn (string $message): bool => str_contains($message, '"env-kit.keys.index"'))
+        ->once();
+});
+
+it('warns once for the deprecated env-kit limiter, however many requests it throttles', function (): void {
+    $legacy = app(RateLimiter::class)->limiter(RegisteredNames::LEGACY_LIMITER);
+    $request = Illuminate\Http\Request::create('/');
+
+    Log::spy();
+
+    foreach (range(1, 3) as $ignored) {
+        $legacy($request);
+    }
+
+    Log::shouldHaveReceived('warning')
+        ->withArgs(static fn (string $message): bool => str_contains($message, RegisteredNames::LEGACY_LIMITER))
+        ->once();
+});

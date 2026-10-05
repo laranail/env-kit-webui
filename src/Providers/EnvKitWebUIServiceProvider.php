@@ -27,6 +27,16 @@ use Simtabi\Laranail\Package\Tools\Support\Definitions\AboutSectionDefinition;
 
 final class EnvKitWebUIServiceProvider extends PackageServiceProvider
 {
+    /**
+     * Deprecated names already warned about. Held for the life of the booted
+     * application -- one request under PHP-FPM, one worker under Octane or a
+     * queue worker -- so a page with N links to a bare route name logs one
+     * line, not N.
+     *
+     * @var array<string, true>
+     */
+    private array $warnedDeprecations = [];
+
     public function configurePackage(Package $package): void
     {
         $package
@@ -96,8 +106,8 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
          * same limit and logs a warning naming the replacement. Earliest
          * removal: the next minor after 0.1.
          */
-        RateLimiter::for(RegisteredNames::LEGACY_LIMITER, static function (Request $request) use ($limit): Limit {
-            Log::warning(sprintf(
+        RateLimiter::for(RegisteredNames::LEGACY_LIMITER, function (Request $request) use ($limit): Limit {
+            $this->warnDeprecatedOnce('limiter:' . RegisteredNames::LEGACY_LIMITER, sprintf(
                 '[laranail/env-kit-webui] The rate limiter "%s" is deprecated; use "throttle:%s" instead.',
                 RegisteredNames::LEGACY_LIMITER,
                 RegisteredNames::LIMITER,
@@ -127,11 +137,11 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
         $previous = (fn (): mixed => $this->missingNamedRouteResolver)->call($url);
 
         URL::resolveMissingNamedRoutesUsing(
-            static function (string $name, mixed $parameters, ?bool $absolute) use ($previous): ?string {
+            function (string $name, mixed $parameters, ?bool $absolute) use ($previous): ?string {
                 $scoped = RegisteredNames::scopedRouteFor($name);
 
                 if ($scoped !== null && Route::has($scoped)) {
-                    Log::warning(sprintf(
+                    $this->warnDeprecatedOnce('route:' . $name, sprintf(
                         '[laranail/env-kit-webui] The route name "%s" is deprecated; use "%s" instead.',
                         $name,
                         $scoped,
@@ -149,6 +159,20 @@ final class EnvKitWebUIServiceProvider extends PackageServiceProvider
                 return null;
             },
         );
+    }
+
+    /**
+     * Log a deprecation once per name for the life of the booted application.
+     */
+    private function warnDeprecatedOnce(string $key, string $message): void
+    {
+        if (isset($this->warnedDeprecations[$key])) {
+            return;
+        }
+
+        $this->warnedDeprecations[$key] = true;
+
+        Log::warning($message);
     }
 
     /**
