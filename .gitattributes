@@ -2,6 +2,8 @@
 /.github/            export-ignore
 /tests/              export-ignore
 /.gitattributes      export-ignore
+/.gitguardian.yaml   export-ignore
+/.gitleaks.toml      export-ignore
 /.gitignore          export-ignore
 /.editorconfig       export-ignore
 /BUILD-LOG.md        export-ignore
