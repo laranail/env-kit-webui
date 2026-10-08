@@ -13,11 +13,11 @@ uses(TestCase::class);
 beforeEach(fn () => config(['laranail.env-kit-webui.enabled' => true]));
 
 it('lists variables and masks secrets in the reactive panel', function () {
-    $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=topsecret123\n");
+    $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=redaction-canary-not-a-secret\n");
 
     Livewire::test(EnvKitPanelComponent::class)
         ->assertSee('APP_NAME')
-        ->assertDontSee('topsecret123');
+        ->assertDontSee('redaction-canary-not-a-secret');
 });
 
 it('edits a value reactively through the engine', function () {
@@ -62,7 +62,7 @@ it('does not expose any env data when disabled', function () {
 });
 
 it('surfaces a guard failure inline instead of crashing', function () {
-    $this->bindEnv("DB_PASSWORD=secret\n", ['laranail.env-kit.auto_backup' => false]);
+    $this->bindEnv("DB_PASSWORD=test-secret-not-real\n", ['laranail.env-kit.auto_backup' => false]);
 
     Livewire::test(EnvKitPanelComponent::class)
         ->call('startEditing', 'DB_PASSWORD') // protected key
@@ -71,5 +71,5 @@ it('surfaces a guard failure inline instead of crashing', function () {
         ->assertHasErrors('draft')
         ->assertSet('editingKey', 'DB_PASSWORD'); // stays in edit mode, not committed
 
-    expect(EnvKit::get('DB_PASSWORD'))->toBe('secret'); // unchanged
+    expect(EnvKit::get('DB_PASSWORD'))->toBe('test-secret-not-real'); // unchanged
 });

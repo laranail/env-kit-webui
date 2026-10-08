@@ -16,14 +16,14 @@ it('404s the panel when disabled', function () {
 });
 
 it('renders the panel HTML (default unstyled theme), masking secrets', function () {
-    $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=topsecret123\n");
+    $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=redaction-canary-not-a-secret\n");
     config(['laranail.env-kit-webui.enabled' => true]);
 
     $this->get('env-kit')
         ->assertOk()
         ->assertSee('unstyled')
         ->assertSee('APP_NAME')
-        ->assertDontSee('topsecret123');
+        ->assertDontSee('redaction-canary-not-a-secret');
 });
 
 it('renders the configured theme with its classes', function () {

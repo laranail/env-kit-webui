@@ -14,13 +14,13 @@ it('404s when the web UI is disabled', function () {
 });
 
 it('lists keys and masks secrets when enabled', function () {
-    $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=topsecret123\n");
+    $this->bindEnv("APP_NAME=Acme\nDB_PASSWORD=redaction-canary-not-a-secret\n");
     config(['laranail.env-kit-webui.enabled' => true]);
 
     $response = $this->getJson('api/v1/env-kit/keys')->assertOk();
 
     $response->assertJsonFragment(['key' => 'APP_NAME', 'value' => 'Acme', 'secret' => false]);
-    expect($response->getContent())->not->toContain('topsecret123');
+    expect($response->getContent())->not->toContain('redaction-canary-not-a-secret');
 });
 
 it('shows a single key', function () {
@@ -41,10 +41,10 @@ it('404s an unknown key', function () {
 });
 
 it('reveals secrets when configured', function () {
-    $this->bindEnv("DB_PASSWORD=topsecret123\n");
+    $this->bindEnv("DB_PASSWORD=test-secret-not-real\n");
     config(['laranail.env-kit-webui.enabled' => true, 'laranail.env-kit-webui.reveal_secrets' => true]);
 
     $this->getJson('api/v1/env-kit/keys/DB_PASSWORD')
         ->assertOk()
-        ->assertJsonPath('data.value', 'topsecret123');
+        ->assertJsonPath('data.value', 'test-secret-not-real');
 });

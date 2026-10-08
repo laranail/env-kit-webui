@@ -9,12 +9,12 @@ uses(TestCase::class);
 beforeEach(fn () => config(['laranail.env-kit-webui.enabled' => true]));
 
 it('honours a custom hidden_keys pattern in the API (masking)', function () {
-    $this->bindEnv("APP_NAME=Acme\nWIDGET_API=topsecret123\n");
+    $this->bindEnv("APP_NAME=Acme\nWIDGET_API=redaction-canary-not-a-secret\n");
     config(['laranail.env-kit.hidden_keys' => ['WIDGET_*']]);
 
     $response = $this->getJson('api/v1/env-kit/keys')->assertOk();
 
-    expect($response->getContent())->not->toContain('topsecret123');
+    expect($response->getContent())->not->toContain('redaction-canary-not-a-secret');
     $response->assertJsonFragment(['key' => 'WIDGET_API', 'secret' => true])
         ->assertJsonFragment(['key' => 'APP_NAME', 'value' => 'Acme', 'secret' => false]);
 });
