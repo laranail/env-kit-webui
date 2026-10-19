@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 use Simtabi\Laranail\EnvKit\WebUI\Events\AccessDenied;
+use Simtabi\Laranail\Package\Tools\Testing\TestCredentials;
 
 uses(TestCase::class);
 
@@ -33,11 +34,14 @@ it('blocks a request from a non-allowlisted IP and allows an allowlisted CIDR', 
 
 it('requires a valid secret token when configured', function () {
     $this->bindEnv("A=1\n");
-    config(['laranail.env-kit-webui.access.token' => 'sekret']);
+    $token = TestCredentials::secret('access');
+    $wrong = TestCredentials::secret('wrong');
+    expect($wrong)->not->toBe($token);
+    config(['laranail.env-kit-webui.access.token' => $token]);
 
     $this->getJson('api/v1/env-kit/keys')->assertForbidden();
-    $this->getJson('api/v1/env-kit/keys', ['X-EnvKit-Token' => 'wrong'])->assertForbidden();
-    $this->getJson('api/v1/env-kit/keys', ['X-EnvKit-Token' => 'sekret'])->assertOk();
+    $this->getJson('api/v1/env-kit/keys', ['X-EnvKit-Token' => $wrong])->assertForbidden();
+    $this->getJson('api/v1/env-kit/keys', ['X-EnvKit-Token' => $token])->assertOk();
 });
 
 it('blocks outside the configured daily time-window', function () {
