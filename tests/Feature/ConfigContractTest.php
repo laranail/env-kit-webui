@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Simtabi\Laranail\EnvKit\WebUI\Tests\TestCase;
 use Simtabi\Laranail\EnvKit\WebUI\Support\PanelAccess;
+use Simtabi\Laranail\Package\Tools\Testing\TestCredentials;
 use Simtabi\Laranail\EnvKit\WebUI\Http\Middleware\RequireEnvKitWebUIToken;
 
 uses(TestCase::class);
@@ -94,7 +95,7 @@ it('can actually be enabled through configuration', function (): void {
 it('honours a configured shared-secret token', function (): void {
     // RequireEnvKitWebUIToken no-ops when it reads no token, so an inert config key did not merely
     // ignore the setting -- it turned the gate off while reporting nothing.
-    config()->set('laranail.env-kit-webui.access.token', 'a-configured-secret');
+    config()->set('laranail.env-kit-webui.access.token', TestCredentials::secret('configured'));
 
     $middleware = new RequireEnvKitWebUIToken;
     $passed = false;

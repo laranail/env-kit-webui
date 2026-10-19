@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Test credentials are generated at run time.** Secrets and tokens in the tests come from
+  `TestCredentials` instead of literals, which secret scanning reported as leaks. A guard test
+  fails on any literal left behind. The `laranail/package-tools` floor is now `^0.1.10`, which
+  adds a second check: every purpose passed to `TestCredentials` must be a single plain lowercase
+  word, because secret scanning reads a compound purpose as the password itself.
 - `laravel/framework ^13.0` is now declared in `require`. `src/` uses `FormRequest` from `Illuminate\Foundation`, which no `illuminate/*` component ships, so the dependency only arrived through the host application.
 - **Route names are vendor-scoped.** `env-kit.keys.{index,show,store,update,destroy}` and
   `env-kit.panel` are now registered as `laranail-env-kit-webui.keys.*` and
